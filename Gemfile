@@ -6,3 +6,7 @@ gem "sinatra-activerecord"
 gem "sqlite3", '~> 1.4'
 gem "pry"
 gem "require_all"
+gem "poke-api-v2"
+gem "tty-prompt"
+gem "artii"
+gem "colorize"
