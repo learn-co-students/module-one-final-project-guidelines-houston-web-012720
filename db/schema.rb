@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 3) do
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.string "reviewer_name"
     t.text "comments"
     t.integer "restaurant_id"
     t.integer "user_id"
