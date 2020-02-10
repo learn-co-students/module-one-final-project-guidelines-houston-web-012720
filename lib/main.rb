@@ -20,7 +20,8 @@ class Main
   end
 
   def self.draw_title
-    puts "Welcome To The World Of Pokemon!"
+    title = Artii::Base.new :font => 'doom'
+    puts title.asciify("PokeCli")
   end 
 
   def self.draw_main_menu
