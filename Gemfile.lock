@@ -15,7 +15,7 @@ GEM
     arel (9.0.0)
     coderay (1.1.2)
     colorize (0.8.1)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.6)
     equatable (0.6.1)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
@@ -30,7 +30,7 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    rack (2.2.1)
+    rack (2.2.2)
     rack-protection (2.0.8.1)
       rack
     rake (13.0.1)

@@ -12,16 +12,15 @@
 
 ActiveRecord::Schema.define(version: 3) do
 
+  create_table "lists", force: :cascade do |t|
+    t.integer "restaurant_id"
+    t.integer "user_id"
+  end
+
   create_table "restaurants", force: :cascade do |t|
     t.string "restaurant_name"
     t.string "location"
     t.string "type_of_food"
-  end
-
-  create_table "reviews", force: :cascade do |t|
-    t.text "comments"
-    t.integer "restaurant_id"
-    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
