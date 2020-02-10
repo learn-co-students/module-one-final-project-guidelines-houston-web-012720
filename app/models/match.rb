@@ -1,3 +1,3 @@
-class Match < ActiveRecord::Base[6.0]
+class Match < ActiveRecord::Base
     belongs_to :page
 end

@@ -1,3 +1,3 @@
-class Keyword < ActiveRecord::Base[6.0]
+class Keyword < ActiveRecord::Base
     belongs_to :match
 end
