@@ -26,7 +26,7 @@ while  positive_tags.count < 3 do  #Tag.with_importance.count
     tag = Viewer.prompt.select("Please select tag (positive or negative)", categories)
     positive_tags << tag
     categories = categories - [tag]
-    Viewer.prompt.slider('Set the importance of the tag',  min: -100, max: 100, step: 5)
+    rel = Viewer.prompt.slider('Set the importance of the tag',  min: -100, max: 100, step: 5)
     Viewer.header
 end
 
