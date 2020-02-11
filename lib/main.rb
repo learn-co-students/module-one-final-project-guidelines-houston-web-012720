@@ -57,6 +57,16 @@ class Main
   end
 
   def self.load_game
+    Main.clear_term
+    username = @@prompt.ask("What is your name Trainer?: ")
+    user = Trainer.all.find { |t| t.name == username }
+
+    if user
+      @@current_trainer = user
+      puts "Welcome back #{@@current_trainer.name}!"
+    else
+      puts "That is not a Trainer i've ever heard of!" 
+    end  
   end
 
   def self.exit_game
@@ -81,7 +91,7 @@ class Main
   def self.new_trainer
 
     puts
-    name = @@prompt.ask("First, what is your name?").upcase
+    name = @@prompt.ask("First, what is your name?")
 
     Main.clear_term
     Main.slow_puts("Right! So your name is #{name}!")
