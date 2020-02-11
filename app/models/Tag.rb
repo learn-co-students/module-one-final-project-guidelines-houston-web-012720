@@ -2,6 +2,7 @@ class Tag < ActiveRecord::Base
     has_many :place_tag_joiners
     has_many :places, through: :place_tag_joiners
 
+
     def self.get_tag_names
         self.all.map {|tag| tag.title}
     end
@@ -14,8 +15,14 @@ class Tag < ActiveRecord::Base
         end
     end
 
-
     def self.with_relevance
         self.all.select {|tag| tag.relevance && tag.relevance != 0}
     end
+  
+    def self.categories
+        Tag.all.map { |tag|
+            tag.group
+        }.uniq
+    end
+
 end
