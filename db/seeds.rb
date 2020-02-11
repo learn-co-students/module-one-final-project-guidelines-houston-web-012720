@@ -12,6 +12,6 @@ s1 = Student.create(cohort_id: 1, first_name: "Stephen", last_name: "Williams", 
 s2 = Student.create(cohort_id: 1, first_name: "Caleb", last_name: "Rutland", age: 25, gender: "male", username: "drvondevious", password: "guest")
 s3 = Student.create(cohort_id: 1, first_name: "Cornelius", last_name: "Omowaiye", age: 25, gender: "male", username: "corn-cloud", password: "guest")
 
-j1 = JournalEntry.create(student_id: 1, lecture_id: 1, date: 2020-01-27, what_did_I_learn: "Ruby yay", what_was_unclear: "It's not a gemstone?", confidence_level: 4, feelings_on_topic: "Funky Fresh", feelings_general: "So Fresh, So Clean", mood: "happy")
-j2 = JournalEntry.create(student_id: 2, lecture_id: 1, date: 2020-01-27, what_did_I_learn: "asksng", what_was_unclear: "nothing", confidence_level: 3, feelings_on_topic: "Looks gud", feelings_general: "Roses", mood: "tired")
-j3 = JournalEntry.create(student_id: 3, lecture_id: 2, date: 2020-01-27, what_did_I_learn: "test for complete", what_was_unclear: "the fog", confidence_level: 3, feelings_on_topic: "the funnestest language", feelings_general: "Hey Ya", mood: "happy")
+j1 = JournalEntry.create(student_id: 1, lecture_id: 1, date: 2020-01-27, what_did_i_learn: "Ruby yay", what_was_unclear: "It's not a gemstone?", confidence_level: 4, feelings_on_topic: "Funky Fresh", feelings_general: "So Fresh, So Clean", mood: "happy")
+j2 = JournalEntry.create(student_id: 2, lecture_id: 1, date: 2020-01-27, what_did_i_learn: "asksng", what_was_unclear: "nothing", confidence_level: 3, feelings_on_topic: "Looks gud", feelings_general: "Roses", mood: "tired")
+j3 = JournalEntry.create(student_id: 3, lecture_id: 2, date: 2020-01-27, what_did_i_learn: "test for complete", what_was_unclear: "the fog", confidence_level: 3, feelings_on_topic: "the funnestest language", feelings_general: "Hey Ya", mood: "happy")

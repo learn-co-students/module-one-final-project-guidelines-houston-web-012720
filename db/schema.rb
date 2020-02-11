@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2020_02_11_152624) do
     t.integer "student_id"
     t.integer "lecture_id"
     t.datetime "date_created"
-    t.string "what_did_I_learn"
+    t.string "what_did_i_learn"
     t.string "what_was_unclear"
     t.integer "confidence_level"
     t.text "feelings_on_topic"
