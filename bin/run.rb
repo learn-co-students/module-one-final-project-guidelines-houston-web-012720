@@ -24,5 +24,4 @@ category = prompt.select("Hello, what do you want to choose?", options)
 header
 puts "You've chosen #{category}, Great!"
 
-
-
+APIscrapper.get_data(category)

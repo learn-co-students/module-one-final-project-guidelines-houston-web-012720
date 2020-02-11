@@ -4,4 +4,11 @@ class Place < ActiveRecord::Base
     has_many :pages
     has_many :matches, through: :pages
     has_many :keywords, through: :matches
+    def relevance
+        #return relevance for the instance
+    end
+
+    def self.get_10_most_relevant
+        # return the array containing 10 most relevant places with headers
+    end
 end
