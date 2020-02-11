@@ -81,9 +81,16 @@ class Main
   def self.new_trainer
 
     puts
-    name = @@prompt.ask("First, what is your name?")
+    name = @@prompt.ask("First, what is your name?").upcase
 
     Main.clear_term
+    Main.slow_puts("Right! So your name is #{name}!")
+
+    Main.slow_puts("#{name}! Your very own POKEMON legend is about to unfold!"); Main.halt
+    Main.slow_puts("A world of dreams and adventures with POKEMON awaits! Let's go!")    
+    sleep(2) 
+
+    Trainer.create(name: name, area_id: 1)
 
   end
 
