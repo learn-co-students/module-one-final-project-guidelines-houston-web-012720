@@ -1,6 +1,6 @@
 Restaurant.destroy_all
 # User.destroy_all
-# Review.destroy_all
+# List.destroy_all
 
 
 

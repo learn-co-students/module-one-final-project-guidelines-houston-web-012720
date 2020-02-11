@@ -13,11 +13,16 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (9.0.0)
+    artii (2.1.2)
     coderay (1.1.2)
     colorize (0.8.1)
+<<<<<<< HEAD
     concurrent-ruby (1.1.5)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+=======
+    concurrent-ruby (1.1.6)
+>>>>>>> 168adbf3362605a816644d88968523ade921a7c2
     equatable (0.6.1)
     http-accept (1.7.0)
     http-cookie (1.0.3)
@@ -40,7 +45,7 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    rack (2.2.1)
+    rack (2.2.2)
     rack-protection (2.0.8.1)
       rack
     rake (13.0.1)
@@ -60,6 +65,8 @@ GEM
       activerecord (>= 3.2)
       sinatra (>= 1.0)
     sqlite3 (1.4.2)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
     tty-color (0.5.1)
@@ -75,9 +82,13 @@ GEM
     tty-screen (0.7.1)
     tzinfo (1.2.6)
       thread_safe (~> 0.1)
+<<<<<<< HEAD
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.6)
+=======
+    unicode-display_width (1.6.1)
+>>>>>>> 168adbf3362605a816644d88968523ade921a7c2
     wisper (2.0.1)
 
 PLATFORMS
@@ -85,6 +96,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (~> 5.2.1)
+  artii
   colorize
   json
   pry
@@ -93,6 +105,7 @@ DEPENDENCIES
   rest-client
   sinatra-activerecord
   sqlite3
+  terminal-table
   tty-prompt
 
 BUNDLED WITH

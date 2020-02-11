@@ -8,5 +8,10 @@ gem 'require_all'
 gem 'rake'
 gem 'tty-prompt'
 gem 'colorize'
+<<<<<<< HEAD
 gem 'rest-client'
 gem 'json'
+=======
+gem 'terminal-table'
+gem 'artii'
+>>>>>>> 168adbf3362605a816644d88968523ade921a7c2
