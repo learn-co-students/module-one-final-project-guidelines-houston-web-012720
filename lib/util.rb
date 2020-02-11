@@ -6,7 +6,7 @@ module Util
   end
 
   def slow_puts(string)
-    string.each_char { |c| sleep(0.07); print c }
+    string.each_char { |c| sleep(0.001); print c }
     print "\n"
   end  
 

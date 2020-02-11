@@ -24,7 +24,7 @@ class Main
     # Main game loop
     while running do
 
-
+      # Do stuff
 
       running = false  # End of program
 
@@ -90,7 +90,7 @@ class Main
     Main.slow_puts("A world of dreams and adventures with POKEMON awaits! Let's go!")    
     sleep(2) 
 
-    Trainer.create(name: name, area_id: 1)
+    @@current_trainer = Trainer.create(name: name, area_id: 1)
 
   end
 
