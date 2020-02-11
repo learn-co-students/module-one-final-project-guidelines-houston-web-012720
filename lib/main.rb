@@ -5,25 +5,28 @@ class Main
  
   extend Util
 
+  # Declaring artii and tty-prompt gems
   @@artii = Artii::Base.new :font => 'doom' # Change font
   @@prompt = TTY::Prompt.new
 
+  # Running begins as false and becomes true on run until finished
   running = false
 
   def self.run
 
     running = true
 
-    Main.clear_term
+    Main.clear_term # Uses method from Util module
 
     Main.draw_title
     Main.draw_main_menu
 
+    # Main game loop
     while running do
 
 
 
-      running = false  
+      running = false  # End of program
 
     end  
 
@@ -34,7 +37,9 @@ class Main
   end 
 
   def self.draw_main_menu
+    # Uses tty-prompt to have the user make a selection
     choice = @@prompt.select('', 'New Game', 'Load Game', 'Exit')
+
     case choice
     when "New Game"
       Main.new_game
@@ -43,6 +48,7 @@ class Main
     when "Exit"
       Main.exit_game
     end  
+
   end  
 
   def self.new_game
@@ -62,16 +68,23 @@ class Main
 
   def self.draw_intro
     Main.clear_term
+
+    # Uses slow_puts and halt method from Util module
     Main.slow_puts("Hello there! Welcome to the world of POKEMON!"); Main.halt
     Main.slow_puts("My name is OAK! People call me the POKEMON PROF!"); Main.halt
     Main.slow_puts("This world is inhabited by creatures called POKEMON!"); Main.halt
     Main.slow_puts("For some people, POKEMON are pets. Others use them for fights."); Main.halt
     Main.slow_puts("Myself...I study POKEMON as a profession."); Main.halt 
+
   end  
 
   def self.new_trainer
+
     puts
     name = @@prompt.ask("First, what is your name?")
+
+    Main.clear_term
+
   end
 
 end  
