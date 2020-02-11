@@ -6,6 +6,8 @@ class APIScrapper
     @@counter = 0
 
     def self.get_data(what)
+        spinner = TTY::Spinner.new("[:spinner] Loading Places...", format: :pulse_2)
+        spinner.auto_spin
         Tag.destroy_all
         Place.destroy_all
         PlaceTagJoiner.destroy_all
@@ -20,7 +22,7 @@ class APIScrapper
             result = JSON.parse(open(url).read)  
             APIScrapper.create_places(result)
         end    
-        puts @@counter 
+        spinner.stop('Done!')
     end
 
     def self.create_places(result)
