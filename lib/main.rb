@@ -24,7 +24,7 @@ class Main
     # Main game loop
     while running do
 
-
+      # Do stuff
 
       running = false  # End of program
 
@@ -91,7 +91,6 @@ class Main
     sleep(2) 
 
     @@current_trainer = Trainer.create(name: name, area_id: 1)
-    puts @@current_trainer.area.name 
 
   end
 
