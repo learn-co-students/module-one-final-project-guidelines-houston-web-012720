@@ -12,4 +12,5 @@ class Student < ActiveRecord::Base
         password = $prompt.mask("What is your password?")
         p "Hi #{username}! Your password is #{password}."
     end
+    
 end
