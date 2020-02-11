@@ -9,20 +9,7 @@ class Place < ActiveRecord::Base
         self.tags.each{ |tag|
             sum = sum + tag.relevance.to_i
         }
-
-       
-
         sum
-
-        # if !self.tags
-        #     return 0
-        # end
-        
-        # self.tags.sum { |sum = 0, tag|
-        #         sum + tag.relevance.to_i
-        #     end
-        # }
-
     end
 
     def self.get_10_most_relevant
