@@ -5,11 +5,30 @@ class Place < ActiveRecord::Base
     has_many :matches, through: :pages
     has_many :keywords, through: :matches
     def relevance
-        #return relevance for the instance
+        sum  = 0
+        self.tags.each{ |tag|
+            sum = sum + tag.relevance.to_i
+        }
+
+       
+
+        sum
+
+        # if !self.tags
+        #     return 0
+        # end
+        
+        # self.tags.sum { |sum = 0, tag|
+        #         sum + tag.relevance.to_i
+        #     end
+        # }
+
     end
 
     def self.get_10_most_relevant
-        # return the array containing 10 most relevant places with headers
+        Place.all.sort { |a,b|
+            b.relevance <=> a.relevance
+        }.first(10)
     end
 
     def tag_titles #returns all tag names associated with place
