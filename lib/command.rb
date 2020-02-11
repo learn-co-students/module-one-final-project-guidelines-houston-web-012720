@@ -15,7 +15,9 @@ module Command
         when "where am i"
             where_am_i   
         when "walk"
-            Main.walk_in_grass    
+            Main.walk_in_grass
+        when "throw pokeball"
+            Main.throw_pokeball    
         when "quit"
             Main.exit_game    
         end
