@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2020_02_10_233504) do
     t.string "name"
     t.float "distance"
     t.string "category"
-    t.string "Address"
+    t.string "address"
     t.string "website"
   end
 

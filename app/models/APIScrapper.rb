@@ -1,4 +1,4 @@
-require_relative '/Users/gavrilchik/Development/Flatiron/Map_Scrapper/2/Map-Scrapper-Placido-and-Georgii-mod1-project/config/environment.rb'
+
 require 'geokit'
 require 'open-uri'
 require 'pry'
@@ -28,7 +28,7 @@ class APIscrapper
                 name: place["name"], 
                 distance: item["distance"], 
                 category: place["categories"][0]["title"], 
-                Address: place["location"]["address"]["text"], 
+                address: place["location"]["address"]["text"], 
                 website: website
             }
             puts strangehash
