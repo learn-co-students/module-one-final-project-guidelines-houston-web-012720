@@ -6,7 +6,7 @@ Lecture.destroy_all
 c1 = Cohort.create(program_type: "Software Engineering", start_date: 2020-01-27, location: "Houston")
 
 l1 = Lecture.create(name: "Intro to Ruby", date: 2020-01-27, teacher: "Vidhi", module: 1)
-l2 = Lecture.create(name: "Rucy Methods", date 2020-01-28, teacher: "Vidhi", module: 2)
+l2 = Lecture.create(name: "Ruby Methods", date: 2020-01-28, teacher: "Vidhi", module: 2)
 
 s1 = Student.create(cohort_id: 1, first_name: "Stephen", last_name: "Williams", age: 32, gender: "male", username: "sterobwms", password: "guest")
 s2 = Student.create(cohort_id: 1, first_name: "Caleb", last_name: "Rutland", age: 25, gender: "male", username: "drvondevious", password: "guest")
