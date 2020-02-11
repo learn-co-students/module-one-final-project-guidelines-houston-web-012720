@@ -76,11 +76,7 @@ def delete_from_user_list(user)
     end
 end
 
-def add_to_list(restaurant,user)
-    
-    list = List.create(restaurant_id: restaurant.id, user_id: user.id)
-    l
-end
+
 
 
 puts "Please puts your name below"
