@@ -9,6 +9,7 @@ module Encounter
       selection = Main.class_variable_get(:@@current_trainer).area.pokemon_list.split(", ").sample
       $current_pokemon = PokeApi.get(pokemon: selection)
       puts "A wild #{$current_pokemon.name} has appeared!"
+      $in_battle = true
     end
 
     def throw_pokeball
@@ -35,10 +36,12 @@ module Encounter
 
     def caught_pokeball
       puts "You caught the wild #{$current_pokemon.name}!"
+      $in_battle = false
     end
 
     def pokemon_flee
       puts "The wild #{$current_pokemon.name} has fled."
+      $in_battle = false
     end
 
 end

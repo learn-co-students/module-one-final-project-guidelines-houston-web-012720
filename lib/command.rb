@@ -2,6 +2,8 @@ module Command
 
     @@prompt = TTY::Prompt.new
 
+    $in_battle = false
+
     def get_command
         @@prompt.ask(">: ")
     end
@@ -24,16 +26,19 @@ module Command
     end
 
     def go_north
+      return if in_battle_check
       Main.class_variable_get(:@@current_trainer).area_id = 
         Main.class_variable_get(:@@current_trainer).area.north_area_id
     end
 
     def go_south
+      return if in_battle_check
       Main.class_variable_get(:@@current_trainer).area_id = 
         Main.class_variable_get(:@@current_trainer).area.south_area_id
     end
 
     def walk_in_grass
+      return if in_battle_check
       Main.random_encounter
     end
 
@@ -49,5 +54,14 @@ module Command
       place = Main.class_variable_get(:@@current_trainer).area.name
       puts "You are in #{place}."
     end
+
+    def in_battle_check
+      if $in_battle
+        puts "You can't do that while you are in a battle!"
+        return true
+      else
+        return false
+      end  
+    end  
 
 end
