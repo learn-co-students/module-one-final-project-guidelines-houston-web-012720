@@ -73,7 +73,7 @@ def delete_from_user_list(user)
         option(user)
     end
 end
-
+####
 def option(user)
     list = ["View your restaurant lists",
             "Delete restaurant in your lists",
