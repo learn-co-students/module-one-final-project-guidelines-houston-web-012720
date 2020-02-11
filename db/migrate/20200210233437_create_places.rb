@@ -4,7 +4,7 @@ class CreatePlaces < ActiveRecord::Migration[5.2]
       t.string :name
       t.float :distance
       t.string :category
-      t.string :Address
+      t.string :address
       t.string :website
     end
   end
