@@ -4,6 +4,7 @@ require_relative './util.rb'
 class Main
  
   extend Util
+  extend Command
 
   # Declaring artii and tty-prompt gems
   @@artii = Artii::Base.new :font => 'doom' # Change font
@@ -24,9 +25,7 @@ class Main
     # Main game loop
     while running do
 
-      # Do stuff
-
-      running = false  # End of program
+      Main.do_command(Main.get_command)
 
     end  
 
@@ -65,7 +64,8 @@ class Main
       @@current_trainer = user
       puts "Welcome back #{@@current_trainer.name}!"
     else
-      puts "That is not a Trainer i've ever heard of!" 
+      puts "That is not a Trainer i've ever heard of!"
+      exit 
     end  
   end
 
