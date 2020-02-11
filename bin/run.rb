@@ -20,24 +20,26 @@ end
 
 ###################### 2nd screen, choose Positive tags
 Viewer.header
-categories = Tag.get_tag_names
+tags = Tag.get_tag_names
 positive_tags = []
-while  positive_tags.count < 3 do  #Tag.with_importance.count
-    tag = Viewer.prompt.select("Please select tag (positive or negative)", categories)
-    positive_tags << tag
-    categories = categories - [tag]
-    rel = Viewer.prompt.slider('Set the importance of the tag',  min: -100, max: 100, step: 5)
+
+while  Tag.with_relevance.count < 5 do  
+    tag = Viewer.prompt.select("Please select tag (positive or negative)", tags)
+    tags = tags - [tag]
+    rel =  Viewer.prompt.slider('Set the importance of the tag',  min: -100, max: 100, step: 5)
+    Tag.find_by(title: tag).update(relevance: rel)
     Viewer.header
+
 end
 
-result = Place.first(10)
+result = Place.get_10_most_relevant
 Viewer.header
 # box = TTY::Box.frame "There will soon be", "Our search results", padding: 3, align: :center, title: {top_left: "Heres the top 10 of your choise", bottom_right: 'v1.0'}, style: {fg: :bright_yellow, bg: :blue, border: { fg: :bright_yellow, bg: :blue}}
 
-table = [["#", "Name", "Address", "Distance"]]
+table = [["#", "Name", "Address", "Distance","Relevance"]]
 
 result.each_with_index { |place, index|
-    table << [index +1, place.name, place.address.sub!("<br/>", ", ").sub!("<br/>", ", "), place.distance ]
+    table << [index +1, place.name, place.address.sub!("<br/>", ", ").sub!("<br/>", ", "), place.distance, place.relevance ]
 }
 
 t = TTY::Table.new table
