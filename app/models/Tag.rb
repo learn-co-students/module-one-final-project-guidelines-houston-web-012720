@@ -14,4 +14,8 @@ class Tag < ActiveRecord::Base
         end
     end
 
+
+    def self.with_relevance
+        self.all.select {|tag| tag.relevance && tag.relevance != 0}
+    end
 end

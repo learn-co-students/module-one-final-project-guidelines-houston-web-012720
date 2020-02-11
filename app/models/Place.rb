@@ -11,4 +11,8 @@ class Place < ActiveRecord::Base
     def self.get_10_most_relevant
         # return the array containing 10 most relevant places with headers
     end
+
+    def tag_titles #returns all tag names associated with place
+        self.tags.map {|tag| tag.title}
+    end
 end
