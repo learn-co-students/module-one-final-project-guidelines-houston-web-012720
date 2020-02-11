@@ -15,5 +15,11 @@ class Tag < ActiveRecord::Base
         end
     end
 
+    def self.categories
+        Tag.all.map { |tag|
+            tag.group
+        }.uniq
+    end
+
 
 end

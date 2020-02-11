@@ -6,8 +6,7 @@ class APIScrapper
     @@counter = 0
 
     def self.get_data(what)
-        spinner = TTY::Spinner.new("[:spinner] Loading Places...", format: :pulse_2)
-        spinner.auto_spin
+
         Tag.destroy_all
         Place.destroy_all
         PlaceTagJoiner.destroy_all
@@ -18,44 +17,47 @@ class APIScrapper
         APIScrapper.create_places(result) 
         while result.has_key?("next") do 
             url = result["next"]
-            teste = result
             result = JSON.parse(open(url).read)  
             APIScrapper.create_places(result)
+            
         end    
-        spinner.stop('Done!')
+        
     end
 
     def self.create_places(result)
         result["items"].each { |item|
-        place = JSON.parse(open(item["href"]).read)  
-        if place["contacts"].has_key?("website")
-            website = place["contacts"]["website"][0]["value"]
-        else
-            website = nil
-        end
-        strangehash = {
-            name: place["name"], 
-            distance: item["distance"], 
-            category: place["categories"][0]["title"], 
-            address: place["location"]["address"]["text"], 
-            website: website
+            Viewer.header
+            spinner = TTY::Spinner.new("#{Place.count} places scrapped from #{Tag.count} categories...[:spinner] ", format: :classic)
+            spinner.auto_spin
+            place = JSON.parse(open(item["href"]).read)  
+            if place["contacts"].has_key?("website")
+                website = place["contacts"]["website"][0]["value"]
+            else
+                website = nil
+            end
+            strangehash = {
+                name: place["name"], 
+                distance: item["distance"], 
+                category: place["categories"][0]["title"], 
+                address: place["location"]["address"]["text"],
+                website: website
             }
-        tags = []
-        if place.has_key?("tags")
-            place["tags"].each { |tag|
-                tags << Tag.find_or_create_by(title: tag["title"],group: tag["group"])
+            tags = []
+            if place.has_key?("tags")
+                place["tags"].each { |tag|
+                    tags << Tag.find_or_create_by(title: tag["title"],group: tag["group"])
+                }
+            end
+            if place.has_key?("categories")
+                place["categories"].each { |category|
+                    tags << Tag.find_or_create_by(title: category["title"],group: "categories")
+                }
+            end
+            this = Place.create(strangehash)
+            tags.each { |tag|
+                PlaceTagJoiner.create(place: this, tag: tag)
             }
-        end
-        if place.has_key?("categories")
-            place["categories"].each { |category|
-                tags << Tag.find_or_create_by(title: category["title"],group: "categories")
-            }
-        end
-        
-        this = Place.create(strangehash)
-        tags.each { |tag|
-            PlaceTagJoiner.create(place: this, tag: tag)
-        }
+            spinner.stop("")
         }
     end
 end
