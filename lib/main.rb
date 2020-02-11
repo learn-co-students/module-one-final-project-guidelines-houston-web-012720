@@ -5,6 +5,7 @@ class Main
  
   extend Util
   extend Command
+  extend Encounter
 
   # Declaring artii and tty-prompt gems
   @@artii = Artii::Base.new :font => 'doom' # Change font

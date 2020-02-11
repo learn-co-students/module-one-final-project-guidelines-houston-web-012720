@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2020_02_10_210720) do
     t.string "name"
     t.integer "north_area_id"
     t.integer "south_area_id"
+    t.string "pokemon_list"
   end
 
   create_table "pokemons", force: :cascade do |t|

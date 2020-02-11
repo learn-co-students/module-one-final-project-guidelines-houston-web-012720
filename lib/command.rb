@@ -13,7 +13,9 @@ module Command
         when "go south"
             go_south   
         when "where am i"
-            where_am_i    
+            where_am_i   
+        when "walk"
+            Main.walk_in_grass    
         when "quit"
             Main.exit_game    
         end
@@ -30,7 +32,7 @@ module Command
     end
 
     def walk_in_grass
-
+      Main.random_encounter
     end
 
     def release_pokemon
