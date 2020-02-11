@@ -36,6 +36,7 @@ module Encounter
 
     def caught_pokeball
       puts "You caught the wild #{$current_pokemon.name}!"
+      Main.class_variable_get(:@@current_trainer).pokemons.create(name: $current_pokemon.name)
       $in_battle = false
     end
 

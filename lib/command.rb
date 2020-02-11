@@ -19,7 +19,9 @@ module Command
         when "walk"
             Main.walk_in_grass
         when "throw pokeball"
-            Main.throw_pokeball    
+            Main.throw_pokeball 
+        when "list pokemon"
+            list_pokemon    
         when "quit"
             Main.exit_game    
         end
@@ -29,12 +31,14 @@ module Command
       return if in_battle_check
       Main.class_variable_get(:@@current_trainer).area_id = 
         Main.class_variable_get(:@@current_trainer).area.north_area_id
+      Main.class_variable_get(:@@current_trainer).save
     end
 
     def go_south
       return if in_battle_check
       Main.class_variable_get(:@@current_trainer).area_id = 
         Main.class_variable_get(:@@current_trainer).area.south_area_id
+      Main.class_variable_get(:@@current_trainer).save
     end
 
     def walk_in_grass
@@ -47,7 +51,9 @@ module Command
     end
 
     def list_pokemon
-
+      Main.class_variable_get(:@@current_trainer).pokemons.each do |p|
+        puts p.name
+      end  
     end
 
     def where_am_i
