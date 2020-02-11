@@ -22,14 +22,13 @@ end
 Viewer.header
 tags = Tag.get_tag_names
 positive_tags = []
+
 while  Tag.with_relevance.count < 5 do  
     tag = Viewer.prompt.select("Please select tag (positive or negative)", tags)
     tags = tags - [tag]
     rel =  Viewer.prompt.slider('Set the importance of the tag',  min: -100, max: 100, step: 5)
     Tag.find_by(title: tag).update(relevance: rel)
     Viewer.header
-   
-    
 
 end
 

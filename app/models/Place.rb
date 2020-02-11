@@ -4,18 +4,20 @@ class Place < ActiveRecord::Base
     has_many :pages
     has_many :matches, through: :pages
     has_many :keywords, through: :matches
+    
     def relevance
-        sum  = 0
-        self.tags.each{ |tag|
-            sum = sum + tag.relevance.to_i
+
+        self.tags.reduce(0) {|memo, tag|
+            tag.relevance ? memo + tag.relevance : memo
         }
-        sum
+
     end
 
     def self.get_10_most_relevant
         Place.all.sort { |a,b|
             b.relevance <=> a.relevance
         }.first(10)
+      
     end
 
     def tag_titles #returns all tag names associated with place
