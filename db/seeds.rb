@@ -1,3 +1,3 @@
-Trainer.create(name: "bily", area_id: 2)
 
+Area.create(name: "test")
 
