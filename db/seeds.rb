@@ -25,5 +25,5 @@ Restaurant.destroy_all
     cuisines = restaurant["restaurant"]["cuisines"]
     Restaurant.create(restaurant_name: name, city: city, address: address, type_of_food: cuisines)
  end
-#  binding.pry
-#  0
+ binding.pry
+ 0
