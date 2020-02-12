@@ -10,6 +10,8 @@ PlaceTagJoiner.destroy_all
 mcdonalds = Place.create(name: "McDonald's", website: "https://www.mcdonalds.com")
 flatiron = Place.create(name: "Flatiron", website: "https://flatironschool.com")
 mynewrestaurant = Place.create(name: "My New Restaurant", website: "http://www.mynewrestaurant.com")
+myrestaurant = Place.create(name: "My Restaurant", website: "www.myrestaurant.com")
+
 
 Page.create(place_id: mcdonalds.id, url: "http://mcdonalds.com/menu")
 Page.create(place_id: mcdonalds.id, url: "http://www.mcdonalds.com/about")
