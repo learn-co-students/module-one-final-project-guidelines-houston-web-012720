@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_212723) do
+ActiveRecord::Schema.define(version: 2020_02_12_153108) do
 
   create_table "keywords", force: :cascade do |t|
     t.string "keyword"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2020_02_11_212723) do
   create_table "pages", force: :cascade do |t|
     t.integer "place_id"
     t.string "url"
+    t.boolean "visited"
   end
 
   create_table "place_tag_joiners", force: :cascade do |t|
