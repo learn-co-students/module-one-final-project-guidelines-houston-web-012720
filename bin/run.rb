@@ -13,8 +13,6 @@ def welcome
 end
 
 def select_restaurant(city)
-    #Grabs the restaurant name from that location of the user and returns an array
-
     Restaurant.where(city: city).map{|restaurant| restaurant.restaurant_name}
 end
 
