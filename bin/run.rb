@@ -92,6 +92,7 @@ def clear_all_restaurant_by_location(user)
 end
 
 def clear_restaurant_by_id(user)
+    user = User.find(user.id)
     puts "Please input your restaurant id you want to remove from the list."
     id = gets.chomp.to_i
     if user.restaurants.map{|restaurant| restaurant.id}.include?(id)
