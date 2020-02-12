@@ -74,9 +74,11 @@ def delete_function(user)
             option(user)
         when list[1]
             clear_all_restaurant_by_location(user)
+            puts "You have removed all restaurants from that location".red
             option(user)
         when list[2]
             user.clear_table
+            puts "You cleared everything from your list".red
             option(user)
         when list[3]
             option(user)
@@ -97,7 +99,7 @@ def clear_restaurant_by_id(user)
     id = gets.chomp.to_i
     if user.restaurants.map{|restaurant| restaurant.id}.include?(id)
         user.delete_from_lists(id)
-        puts "Id: #{id} is now deleted off your list".green
+        puts "Id: #{id} is now deleted off your list".red
     else
         puts "Invalid input !".red
         clear_restaurant_by_id(user)
