@@ -67,7 +67,10 @@ class Main
       puts "Welcome back #{@@current_trainer.name}!"
     else
       puts "That is not a Trainer i've ever heard of!"
-      exit 
+      sleep(2)
+      Main.clear_term
+      Main.draw_title
+       Main.draw_main_menu
     end  
   end
 
@@ -125,9 +128,9 @@ class Main
     when "Charmander"
       puts
       Main.slow_puts("So you want the fire POKEMON, Charmander?"); Main.halt
-    end 
+    end
 
-  end  
+  end
 
 end  
 

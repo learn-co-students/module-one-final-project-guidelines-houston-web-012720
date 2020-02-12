@@ -4,6 +4,10 @@ module Command
 
     $in_battle = false
 
+    def trainer
+      Main.class_variable_get(:@@current_trainer)
+    end  
+
     def get_command
         @@prompt.ask(">: ")
     end
@@ -28,19 +32,21 @@ module Command
             menu    
         when "quit"
             Main.exit_game    
+        when "release pokemon"  
+            release_pokemon    
         else
             puts "That is not a valid command!"
             puts "Type 'help' to for a list of commands."
+            Main.exit_game  
         end
     end
 
     def go_north
       return if in_battle_check
       
-      if Main.class_variable_get(:@@current_trainer).area.north_area_id
-        Main.class_variable_get(:@@current_trainer).area_id = 
-          Main.class_variable_get(:@@current_trainer).area.north_area_id
-        Main.class_variable_get(:@@current_trainer).save
+      if trainer.area.north_area_id
+        trainer.area_id = trainer.area.north_area_id
+        trainer.save
       else
         puts "You can't go that way!"
         return
@@ -50,33 +56,42 @@ module Command
     def go_south
       return if in_battle_check
 
-      if Main.class_variable_get(:@@current_trainer).area.south_area_id
-        Main.class_variable_get(:@@current_trainer).area_id = 
-          Main.class_variable_get(:@@current_trainer).area.south_area_id
-        Main.class_variable_get(:@@current_trainer).save
+      if trainer.area.south_area_id
+        trainer.area_id = trainer.area.south_area_id
+        trainer.save
       else
         puts "You can't go that way!"
+        return
       end  
     end
 
     def walk_in_grass
-      return if Main.class_variable_get(:@@current_trainer).area.pokemon_list == nil
-      return if in_battle_check
+      return if trainer.area.pokemon_list == nil 
+        return  if in_battle_check
       Main.random_encounter
+      
     end
 
     def release_pokemon
-
+      ans = @@prompt.ask("which pokemon would you like to release?")
+      rp = trainer.pokemons.find {|p| p.name == ans}
+        if rp.delete
+          puts "Pokemon deleted!"
+          trainer.save
+          trainer.reload
+        else 
+          puts "No pokemon"
+        end
     end
 
     def list_pokemon
-      Main.class_variable_get(:@@current_trainer).pokemons.each do |p|
+      trainer.pokemons.each do |p|
         puts p.name
       end  
     end
 
     def where_am_i
-      place = Main.class_variable_get(:@@current_trainer).area.name
+      place = trainer.area.name
       puts "You are in #{place}."
     end
 
