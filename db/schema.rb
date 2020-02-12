@@ -19,7 +19,8 @@ ActiveRecord::Schema.define(version: 3) do
 
   create_table "restaurants", force: :cascade do |t|
     t.string "restaurant_name"
-    t.string "location"
+    t.string "address"
+    t.string "city"
     t.string "type_of_food"
   end
 
