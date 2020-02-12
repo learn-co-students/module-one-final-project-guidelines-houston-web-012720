@@ -12,11 +12,13 @@ class Place < ActiveRecord::Base
     end
 
     def is_internal_link?(link)
-        exceptions = ["www.facebook.com", "facebook.com", "www.google.com", "google.com"]
-        host = URI.parse(link).host
-        URI.parse(self.website).host == host && !exceptions.include?(host)
+        exceptions = ["www.facebook.com", "www.google.com"]
+        link_host = URI.parse(link).host
+        website_host = URI.parse(self.website).host
+        link_host.prepend("www.") unless link_host.starts_with?("www.")
+        website_host.prepend("www.") unless website_host.starts_with?("www.")
+        website_host == link_host && !exceptions.include?(link_host)
     end
-
 
     def self.get_10_most_relevant
         Place.all.sort { |a,b|
