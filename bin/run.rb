@@ -13,8 +13,6 @@ def welcome
 end
 
 def select_restaurant(city)
-    #Grabs the restaurant name from that location of the user and returns an array
-
     Restaurant.where(city: city).map{|restaurant| restaurant.restaurant_name}
 end
 
@@ -94,6 +92,7 @@ def clear_all_restaurant_by_location(user)
 end
 
 def clear_restaurant_by_id(user)
+    user = User.find(user.id)
     puts "Please input your restaurant id you want to remove from the list."
     id = gets.chomp.to_i
     if user.restaurants.map{|restaurant| restaurant.id}.include?(id)

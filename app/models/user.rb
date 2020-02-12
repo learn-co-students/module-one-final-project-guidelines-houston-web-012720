@@ -33,4 +33,11 @@ class User < ActiveRecord::Base
         restaurants.destroy(id)
         print_out_list
     end
+    def clear_table
+        restaurants.delete_all
+    end
+    def delete_all_restaurant_by_location(restaurant_city)
+        restaurants.where(city: restaurant_city).destroy_all
+    end
+
 end
