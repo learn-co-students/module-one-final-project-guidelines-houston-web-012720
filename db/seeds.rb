@@ -30,3 +30,4 @@
 #     timing = restaurant["restaurant"]["timings"]
 #     Restaurant.create(restaurant_name: name, city: city, address: address, type_of_food: cuisines, timing: timing)
 #  end
+0
