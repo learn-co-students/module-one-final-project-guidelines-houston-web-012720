@@ -10,6 +10,9 @@ class APIScrapper
         Tag.destroy_all
         Place.destroy_all
         PlaceTagJoiner.destroy_all
+        Page.destroy_all
+        Match.destroy_all
+        Keyword.destroy_all
         remote_ip = open('http://whatismyip.akamai.com').read
         coordinates = Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
         url = "#{@@base_url}at=#{coordinates.lat},#{coordinates.lng}&q=#{what}&#{@@api_key}"
@@ -25,41 +28,51 @@ class APIScrapper
     end
 
     def self.create_places(result)
-        result["items"].each { |item|
+        threads = []
+        result["items"].each { |json_part|
+            threads << Thread.new(json_part) { |item|
+                place = JSON.parse(open(item["href"]).read)  
+                if place["contacts"].has_key?("website")
+                    website = place["contacts"]["website"][0]["value"]
+                else
+                    website = nil
+                end
+                strangehash = {
+                    name: place["name"], 
+                    distance: item["distance"], 
+                    category: place["categories"][0]["title"], 
+                    address: place["location"]["address"]["text"],
+                    website: website
+                }
+                tags = []
+                if place.has_key?("tags")
+                    place["tags"].each { |tag|
+                        tags << Tag.find_or_create_by(title: tag["title"],group: tag["group"])
+                    }
+                end
+                if place.has_key?("categories")
+                    place["categories"].each { |category|
+                        tags << Tag.find_or_create_by(title: category["title"],group: "categories")
+                    }
+                end
+                begin 
+                    this = Place.create(strangehash)
+                    tags.each { |tag|
+                        PlaceTagJoiner.create(place: this, tag: tag)
+                    }
+                rescue
+                    retry
+                end
+        
+            }
+        }
+        threads.each {|thr| 
+            thr.join 
             Viewer.header
-            spinner = TTY::Spinner.new("#{Place.count} places scraped from #{Tag.count} categories...[:spinner] ", format: :classic)
-            spinner.auto_spin
-            place = JSON.parse(open(item["href"]).read)  
-            if place["contacts"].has_key?("website")
-                website = place["contacts"]["website"][0]["value"]
-            else
-                website = nil
-            end
-            strangehash = {
-                name: place["name"], 
-                distance: item["distance"], 
-                category: place["categories"][0]["title"], 
-                address: place["location"]["address"]["text"],
-                website: website
-            }
-            tags = []
-            if place.has_key?("tags")
-                place["tags"].each { |tag|
-                    tags << Tag.find_or_create_by(title: tag["title"],group: tag["group"])
-                }
-            end
-            if place.has_key?("categories")
-                place["categories"].each { |category|
-                    tags << Tag.find_or_create_by(title: category["title"],group: "categories")
-                }
-            end
-            this = Place.create(strangehash)
-            tags.each { |tag|
-                PlaceTagJoiner.create(place: this, tag: tag)
-            }
-            spinner.stop("")
+            puts "#{Place.count} places scraped from #{Tag.count} categories..."
         }
     end
+
 end
 
 #

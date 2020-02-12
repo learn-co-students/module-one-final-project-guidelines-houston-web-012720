@@ -5,7 +5,13 @@ class Page < ActiveRecord::Base
 
     def visit
         puts "checking #{self.url}"
-        rawtext = RestClient.get(self.url)
+        begin
+            rawtext = RestClient.get(self.url)
+        rescue
+            puts "#{self.url} doesn't respond"
+            self.update(visited: true)
+            return nil
+        end
         ##### extract keywords
         Keyword.all.each { |k|
             counter = rawtext.split(k.keyword).count - 1
@@ -13,7 +19,9 @@ class Page < ActiveRecord::Base
                 Match.create(page_id: self.id, keyword_id: k.id, count: counter)
             end
         }
-
+        if self.url == "http://mcdonalds.com"
+            binding.pry
+        end
         #####extract urls
         links = URI::extract(rawtext, "https").uniq
         links = links.map{|link| 
@@ -37,7 +45,8 @@ class Page < ActiveRecord::Base
                         Match.create(page_id: newpage.id, keyword_id: match.keyword_id, count: match.count)
                     }
                 end
-            else
+            end
+            if Page.where(place_id: self.place_id).count < 30
                 Page.create(place_id: self.place_id, url: link)
             end
         }
@@ -49,8 +58,7 @@ class Page < ActiveRecord::Base
         if Keyword.count > 0
             Place.where.not(website: nil).each{ |place|
                 page = Page.find_or_create_by(place_id: place.id, url: place.website)
-               
-                while Page.where(place_id: place.id, visited: nil).count > 0 && Page.where("place_id = ?", place.id).count < 20
+                while Page.where(place_id: place.id, visited: nil).count > 0 
                     Page.where(place_id: place.id, visited: nil).first.visit
                     # binding.pry
                 end
