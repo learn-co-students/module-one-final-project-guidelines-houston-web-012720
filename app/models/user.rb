@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
         print_out_list
     end
 
-    def delete_from_lists(id)
+    def delete_from_lists(restaurant_name)
         restaurants.destroy(id)
         print_out_list
     end

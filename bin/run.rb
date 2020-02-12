@@ -62,13 +62,13 @@ def search_location(user)
 end
 
 def delete_function(user)
-    if user.lists.empty?
+    if user.restaurants.empty?
         puts "You don't have any restaurant inside your list to delete.".red
         user.print_out_list
         option(user)
     else
         user.print_out_list
-        list = ["Clear restaurant by Id", "Clear all restaurants by location","Clear all your restaurants from lists","Exit"]
+        list = ["Clear restaurant by name", "Clear all restaurants by location","Clear all your restaurants from lists","Exit"]
         input = @prompt.select("*".blue,list)
         case input 
         when list[0]
@@ -94,15 +94,11 @@ def clear_all_restaurant_by_location(user)
 end
 
 def clear_restaurant_by_id(user)
-    puts "Please input your restaurant id you want to remove from the list."
-    id = gets.chomp.to_i
-    if user.restaurants.map{|restaurant| restaurant.id}.include?(id)
-        user.delete_from_lists(id)
-        puts "Id: #{id} is now deleted off your list".green
-    else
-        puts "Invalid input !".red
-        clear_restaurant_by_id(user)
-    end
+    puts "Please pick restaurant name you want to remove from the list."
+    list = user.restaurants.pluck(:restaurant_name)
+    input = @prompt.select("*".blue,list)
+    user.delete_from_lists(input)
+    puts "Restaurant: #{input} is now deleted off your list".green
 end
 
 def option(user)
