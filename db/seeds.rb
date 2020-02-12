@@ -3,7 +3,7 @@
 # List.destroy_all
 
 
-
+##abcedoa
 # Restaurant.create(restaurant_name: "Olive Garden", location: "Houston", type_of_food: "Italian")
 # Restaurant.create(restaurant_name: "Indigo", location: "Houston", type_of_food: "Italian")
 # Restaurant.create(restaurant_name: "La Lucha", location: "Houston", type_of_food: "Mexican")
@@ -30,4 +30,3 @@
 #     timing = restaurant["restaurant"]["timings"]
 #     Restaurant.create(restaurant_name: name, city: city, address: address, type_of_food: cuisines, timing: timing)
 #  end
-0
