@@ -41,11 +41,11 @@ def get_restaurant_object(restaurant_name,user)
         else
             puts "Invalid input please enter Yes or No to add restaurant to your lists"
             answer = gets.chomp.split(" ").collect{|answer| answer.capitalize}.join(" ")
-            if answer == "yes"
+            if answer == "Yes"
                 user.add_to_list(restaurant)
                 puts " #{restaurant.restaurant_name} is now added to your list!".green
             end 
-           break if answer == "no" 
+           continue if answer == "No" 
         end
         option(user)
     end
