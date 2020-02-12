@@ -18,10 +18,12 @@
 # houston_url = 'https://developers.zomato.com/api/v2.1/search?entity_id=277&entity_type=city&collection_id=1'
 # austin_url = "https://developers.zomato.com/api/v2.1/search?entity_id=278&entity_type=city"
 # dallas_url = "https://developers.zomato.com/api/v2.1/search?entity_id=276&entity_type=city"
+# lubbock_url = "https://developers.zomato.com/api/v2.1/search?entity_id=1189&entity_type=city"
 
-#  response1 = RestClient.get(houston_url, headers={'user-key': "a9252d17baa2869cc9fb47f0db114837"})
-#  restaurant1 = JSON.parse(response1)
-#  restaurant1["restaurants"].each do |restaurant|
+
+#  response = RestClient.get(lubbock_url, headers={'user-key': "a9252d17baa2869cc9fb47f0db114837"})
+#  restaurant = JSON.parse(response)
+#  restaurant["restaurants"].each do |restaurant|
 #     name = restaurant["restaurant"]["name"]
 #     city = restaurant["restaurant"]["location"]["city"]
 #     address = restaurant["restaurant"]["location"]["address"]
