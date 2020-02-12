@@ -7,10 +7,21 @@ Page.destroy_all
 Tag.destroy_all
 PlaceTagJoiner.destroy_all
 
-mcdonalds = Place.create(name: "McDonald's")
-flatiron = Place.create(name: "Flatiron")
+mcdonalds = Place.create(name: "McDonald's", website: "https://www.mcdonalds.com")
+flatiron = Place.create(name: "Flatiron", website: "https://flatironschool.com")
+mynewrestaurant = Place.create(name: "My New Restaurant", website: "http://www.mynewrestaurant.com")
 
-Page.create(url: "www.mcdonalds.com")
+Page.create(place_id: mcdonalds.id, url: "http://mcdonalds.com/menu")
+Page.create(place_id: mcdonalds.id, url: "http://www.mcdonalds.com/about")
+Page.create(place_id: mcdonalds.id, url: "http://www.mcdonalds.com/locations")
+Page.create(place_id: flatiron.id, url: "https://flatironschool.com/jobs-reports/")
+Page.create(place_id: mynewrestaurant.id, url: "https://www.mynewrestaurant.com/a/home")
+Page.create(place_id: mynewrestaurant.id, url: "https://mynewrestaurant.com/home")
+Page.create(place_id: mynewrestaurant.id, url: "http://www.mynewrestaurant.com/a/home")
+Page.create(place_id: mynewrestaurant.id, url: "http://mynewrestaurant.com/a/home")
+Page.create(place_id: mynewrestaurant.id, url: "http://www.google.com/a/home")
+
+
 
 pizza = Tag.create(title: "Pizza")
 burger = Tag.create(title: "Burger")
@@ -25,17 +36,3 @@ PlaceTagJoiner.create(place_id: mcdonalds.id, tag_id: burger.id)
 PlaceTagJoiner.create(place_id: mcdonalds.id, tag_id: fast_food.id)
 
 
-# response = RestClient.get("https://www.googleapis.com/books/v1/volumes?q=ruby+programming", headers={})
-# books = JSON.parse(response)
-
-# books["items"].each do |book|
-#     if book["authors"]
-#         a = Author.create(name: book["authors"][0])
-#     else
-#         a = Author.create(name: "N/A")
-#     end
-#     Book.create{title: book["volumeInfo"][:title], year: book["volumeInfo"]["publishedDate"], author_id: a.id}
-# end
-
-# binding.pry
-# 0
