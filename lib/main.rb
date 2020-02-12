@@ -25,9 +25,7 @@ class Main
 
     # Main game loop
     while running do
-
       Main.do_command(Main.get_command)
-
     end  
 
   end
@@ -65,6 +63,7 @@ class Main
     if user
       @@current_trainer = user
       puts "Welcome back #{@@current_trainer.name}!"
+      puts "Type 'help' for a list of usable commands.".light_black
     else
       puts "That is not a Trainer i've ever heard of!"
       sleep(2)

@@ -9,11 +9,19 @@ module Command
     end  
 
     def get_command
+      while $in_battle
+        battle_menu
+      end
+
       @@prompt.ask("#{trainer.name} ".yellow.bold + "$".cyan.bold)
     end
 
     def do_command(cmd)
+
         Main.clear_term
+
+        puts "Type 'help' to for a list of commands."
+
         case cmd 
         when "go north"
             go_north
@@ -30,11 +38,7 @@ module Command
         when "help"
             help   
         when "menu"
-          if $in_battle
-            battle_menu 
-          else
-            menu 
-          end  
+          menu 
         when "quit"
             Main.exit_game    
         when "release pokemon"  
@@ -43,6 +47,7 @@ module Command
           puts "That is not a valid command!".colorize(:red)
           puts "Type 'help' to for a list of commands."
         end
+
     end
 
     def go_north
@@ -130,7 +135,7 @@ module Command
       puts "go north - Goes north of your current location."
       puts "go south - Goes south of your current location."
       puts "walk - Walk in the tall grass to look for Pokemon."
-      puts "menu - Opens a menu with more additional options."
+      puts "menu - Opens a menu with additional options."
       puts "quit - Quits the game."
       puts
     end  
