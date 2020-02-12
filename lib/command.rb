@@ -23,9 +23,13 @@ module Command
         when "walk"
             Main.walk_in_grass
         when "throw pokeball"
-            Main.throw_pokeball 
+            Main.throw_pokeball
+        when "flee"
+            Main.flee    
         when "list pokemon"
             list_pokemon    
+        when "get pokeballs"
+            get_pokeballs    
         when "help"
             help   
         when "menu"
@@ -71,6 +75,16 @@ module Command
       Main.random_encounter
       
     end
+
+    def get_pokeballs
+      if trainer.area_id == 1
+        puts "PROF OAK gives you 5 POKE BALLS!"
+        trainer.pokeball += 5
+        trainer.save
+      else
+        puts "You need to be in PALLET TOWN to get more!"
+      end  
+    end  
 
     def release_pokemon
       ans = @@prompt.ask("which pokemon would you like to release?")
@@ -130,7 +144,7 @@ module Command
     def menu
       puts
       puts "-MENU-----------------"
-      choice = @@prompt.select("", "Pokemon", "Release Pokemon", "Quit")
+      choice = @@prompt.select("", "Pokemon", "Release Pokemon", "Quit", "Items")
       puts
 
       case choice
@@ -138,6 +152,8 @@ module Command
         pokemon_info
       when "Release Pokemon"
         release_pokemon
+      when "Items"
+        puts "Pokeballs: #{trainer.pokeball}"  
       when "Quit"
         Main.exit_game
       end
