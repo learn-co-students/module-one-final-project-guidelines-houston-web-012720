@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_02_11_152624) do
     t.integer "confidence_level"
     t.text "feelings_on_topic"
     t.text "feelings_general"
-    t.string "mood"
+    t.integer "mood"
   end
 
   create_table "lectures", force: :cascade do |t|
