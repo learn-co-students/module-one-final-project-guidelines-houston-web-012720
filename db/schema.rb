@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 3) do
     t.string "address"
     t.string "city"
     t.string "type_of_food"
+    t.string "timing"
   end
 
   create_table "users", force: :cascade do |t|

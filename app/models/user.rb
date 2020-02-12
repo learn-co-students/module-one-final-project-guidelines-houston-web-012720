@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
     has_many :lists
     has_many :restaurants, through: :lists
-
+    
     def add_to_list(restaurant)
         List.create(restaurant_id: restaurant.id, user_id: self.id)
 
