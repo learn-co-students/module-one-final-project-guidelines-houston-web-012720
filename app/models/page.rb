@@ -19,9 +19,7 @@ class Page < ActiveRecord::Base
                 Match.create(page_id: self.id, keyword_id: k.id, count: counter)
             end
         }
-        if self.url == "http://mcdonalds.com"
-            binding.pry
-        end
+
         #####extract urls
         links = URI::extract(rawtext, "https").uniq
         links = links.map{|link| 
@@ -35,7 +33,15 @@ class Page < ActiveRecord::Base
             end
             link
         }.uniq
-        links = links.select{ |link| self.place.is_internal_link?(link) && !Page.exists?(place_id: self.place_id, url: link)}
+
+        links = links.select{ |link|       
+        begin
+            self.place.is_internal_link?(link) && !Page.exists?(place_id: self.place_id, url: link)
+        rescue
+            false
+        end
+        }
+
         links.each {|link|
             this_url = Page.find_by(url: link)
             if this_url
@@ -55,6 +61,8 @@ class Page < ActiveRecord::Base
     end
 
     def self.iterate_all
+        Page.delete_all
+        Match.delete_all
         if Keyword.count > 0
             Place.where.not(website: nil).each{ |place|
                 page = Page.find_or_create_by(place_id: place.id, url: place.website)
@@ -63,6 +71,29 @@ class Page < ActiveRecord::Base
                     # binding.pry
                 end
             }
+        end
+    end
+
+
+    def self.iterate_all_concurrently
+        Page.delete_all
+        Match.delete_all
+        threads = []
+        if Keyword.count > 0
+            Place.where.not(website: nil).each{ |unvisited_place|
+                until threads.map { |t| t.status }.count("run") < 1 do sleep 5 end
+                threads << Thread.new(unvisited_place) { |place|
+                    page = Page.find_or_create_by(place_id: place.id, url: place.website)
+                    while Page.where(place_id: place.id, visited: nil).count > 0
+                        begin 
+                            Page.where(place_id: place.id, visited: nil).first.visit
+                        rescue
+                            retry
+                        end
+                    end
+                }
+            }
+            threads.each {|thr|thr.join}
         end
     end
 end

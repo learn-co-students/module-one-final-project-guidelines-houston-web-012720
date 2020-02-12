@@ -63,6 +63,8 @@ if Viewer.prompt.yes?("Do you want also add some keywords?")
     end
 end
 
+Page.iterate_all_concurrently
+
 ###################### 4th screeen, print results
 
 Viewer.header

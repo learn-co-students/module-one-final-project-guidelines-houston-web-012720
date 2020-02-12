@@ -30,6 +30,7 @@ class APIScrapper
     def self.create_places(result)
         threads = []
         result["items"].each { |json_part|
+            until threads.map { |t| t.status }.count("run") < 10 do sleep 5 end
             threads << Thread.new(json_part) { |item|
                 place = JSON.parse(open(item["href"]).read)  
                 if place["contacts"].has_key?("website")
