@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_152624) do
+ActiveRecord::Schema.define(version: 2020_02_12_163839) do
 
   create_table "cohorts", force: :cascade do |t|
     t.string "program_type"
@@ -21,13 +21,13 @@ ActiveRecord::Schema.define(version: 2020_02_11_152624) do
   create_table "journal_entries", force: :cascade do |t|
     t.integer "student_id"
     t.integer "lecture_id"
-    t.datetime "date_created"
     t.string "what_did_i_learn"
     t.string "what_was_unclear"
     t.integer "confidence_level"
     t.text "feelings_on_topic"
     t.text "feelings_general"
     t.integer "mood"
+    t.date "created_at"
   end
 
   create_table "lectures", force: :cascade do |t|
