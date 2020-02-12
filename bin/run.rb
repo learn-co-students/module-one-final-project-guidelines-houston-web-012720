@@ -20,20 +20,25 @@ end
 
 def get_restaurant_object(restaurant_name,user)
     restaurant = Restaurant.find_by(restaurant_name: restaurant_name)
-    puts "The restaurant name is #{restaurant.restaurant_name}"
-    puts "The restaurant type of food #{restaurant.type_of_food}"
-    puts "The city is #{restaurant.city}"
-    puts "The address is #{restaurant.address}"
-    puts "The available times are #{restaurant.timing}"
-    puts "\n"
+    puts "|------------------------------------------------------------------------------------------------|"
+    puts "|                   #{restaurant.restaurant_name}"
+    puts "|\n"
+    puts "|       Location:"
+    puts "|             #{restaurant.address}"
+    puts "|       Cuisienes:"
+    puts "|             #{restaurant.type_of_food}"
+    puts "|       Timings:"
+    puts "|             #{restaurant.timing}"
+    puts "|\n"
+    puts "|-------------------------------------------------------------------------------------------------|"
     answer = @prompt.yes?("Would you like to add this restaurant into your list?")
     user = User.find(user.id)
     if answer
         if user.restaurants.map{|restaurant| restaurant.restaurant_name}.include?(restaurant.restaurant_name)
-            puts "You have that restaurant already in your list".green
+            puts "You have that restaurant already in your list".red
             user.print_out_list
         else
-            puts "#{restaurant.restaurant_name} has now been added to your list!".red
+            puts "#{restaurant.restaurant_name} has now been added to your list!".green
             user.add_to_list(restaurant)
         end 
         option(user)
@@ -56,18 +61,47 @@ def search_location(user)
     list_of_restaurant(select_restaurant(input),user)
 end
 
-def delete_from_user_list(user)
+def delete_function(user)
     if user.lists.empty?
         puts "You don't have any restaurant inside your list to delete.".red
         user.print_out_list
         option(user)
     else
         user.print_out_list
-        puts "Please input your restaurant id you want to remove from the list."
-        id = gets.chomp
+        list = ["Clear restaurant by Id", "Clear all restaurants by location","Clear all your restaurants from lists","Exit"]
+        input = @prompt.select("*".blue,list)
+        case input 
+        when list[0]
+            clear_restaurant_by_id(user)
+            option(user)
+        when list[1]
+            clear_all_restaurant_by_location(user)
+            option(user)
+        when list[2]
+            user.clear_table
+            option(user)
+        when list[3]
+            option(user)
+        end
+    end
+end
+
+def clear_all_restaurant_by_location(user)
+    puts "Select city you want to delete from list"
+    list = user.restaurants.pluck(:city).uniq
+    input = @prompt.select("*".blue,list)
+    user.delete_all_restaurants_in_city(input)
+end
+
+def clear_restaurant_by_id(user)
+    puts "Please input your restaurant id you want to remove from the list."
+    id = gets.chomp.to_i
+    if user.restaurants.map{|restaurant| restaurant.id}.include?(id)
         user.delete_from_lists(id)
         puts "Id: #{id} is now deleted off your list".green
-        option(user)
+    else
+        puts "Invalid input !".red
+        clear_restaurant_by_id(user)
     end
 end
 
@@ -83,7 +117,7 @@ def option(user)
         user.print_out_list
         option(user)
     when list[1]
-        delete_from_user_list(user)
+        delete_function(user)
     when list[2]
         search_location(user)
     when list[3]
