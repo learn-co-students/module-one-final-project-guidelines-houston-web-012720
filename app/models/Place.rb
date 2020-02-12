@@ -9,6 +9,12 @@ class Place < ActiveRecord::Base
         self.tags.reduce(0) {|memo, tag| tag.relevance ? memo + tag.relevance : memo}
     end
 
+    def is_internal_link?(link)
+        exceptions = ["facebook.com"]
+
+    end
+
+
     def self.get_10_most_relevant
         Place.all.sort { |a,b|
             b.relevance <=> a.relevance
