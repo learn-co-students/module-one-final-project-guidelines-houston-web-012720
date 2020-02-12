@@ -24,7 +24,6 @@ Viewer.header
 puts "Using data from the previous search" if data_was_cleared
 tags = Tag.get_tag_names
 tags.unshift("DONE SELECTING TAGS")
-positive_tags = []
 
 if data_was_cleared
 while Tag.with_relevance.count < 5 do
