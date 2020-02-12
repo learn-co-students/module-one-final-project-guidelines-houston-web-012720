@@ -42,6 +42,7 @@ module Encounter
     end
 
     def flee
+      $in_battle = false
       $current_pokemon = nil
       puts "You flee from the battle!"
     end  
@@ -49,6 +50,7 @@ module Encounter
     def caught_pokeball
       puts "You caught the wild #{$current_pokemon.name}!"
       Main.class_variable_get(:@@current_trainer).pokemons.create(name: $current_pokemon.name)
+      $current_pokemon = nil
       $in_battle = false
     end
 
