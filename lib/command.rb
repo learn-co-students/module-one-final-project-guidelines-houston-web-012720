@@ -23,7 +23,9 @@ module Command
         when "list pokemon"
             list_pokemon    
         when "help"
-            help    
+            help   
+        when "menu"
+            menu    
         when "quit"
             Main.exit_game    
         else
@@ -96,6 +98,25 @@ module Command
       puts "menu - Opens a menu with more additional options."
       puts "quit - Quits the game."
       puts
+    end  
+
+    def menu
+      puts
+      puts "-MENU-----------------"
+      choice = @@prompt.select("", "Pokemon", "Release Pokemon", "Quit")
+      puts
+
+      case choice
+      when "Pokemon"
+        list_pokemon
+      when "Release Pokemon"
+        release_pokemon
+      when "Quit"
+        Main.exit_game
+      end
+
+      puts
+
     end  
 
 end
