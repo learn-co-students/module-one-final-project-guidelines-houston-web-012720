@@ -26,30 +26,24 @@ def get_restaurant_object(restaurant_name,user)
     puts "The address is #{restaurant.address}"
     puts "\n"
     puts "Would you like to add this restaurant into your list (Yes/No)"
-    answer = gets.chomp.split(" ").collect{|answer| answer.capitalize}.join(" ")
     while true do
+        answer = gets.chomp.split(" ").collect{|answer| answer.capitalize}.join(" ")
         case answer
         when "Yes" || "yes"
             if user.restaurants.map{|restaurant| restaurant.restaurant_name}.include?(restaurant.restaurant_name)
             puts "You have that restaurant already in your list".green
                     user.print_out_list
-                    option(user)
             else
                 user.add_to_list(restaurant)
-                # puts "Add to #{restaurant.restaurant_name} to #{user.user_name} list"
                   puts " #{restaurant.restaurant_name} has now been added to your list!".green
-                option(user)
             end 
-            break
         when "No" || "no"
-            option(user)
-            break
         else
             puts "Invalid input please enter Yes or No to add restaurant to your lists"
             answer = gets.chomp.split(" ").collect{|answer| answer.capitalize}.join(" ")
         end
+        option(user)
     end
-       
 end
 
 def list_of_restaurant(list,user)
@@ -74,6 +68,7 @@ def delete_from_user_list(user)
         puts "Please input your restaurant id you want to remove from the list."
         id = gets.chomp
         user.delete_from_lists(id)
+        puts "Id: #{id} is now deleted off your list".green
         option(user)
     end
 end
@@ -84,7 +79,7 @@ def option(user)
             "Search restaurant location",
             "Exit"
         ]
-    input = @prompt.select("*".blue,list)
+    input = @prompt.select("*".green,list)
     case input
     when list[0]
         user.print_out_list
