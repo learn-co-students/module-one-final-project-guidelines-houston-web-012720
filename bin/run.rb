@@ -24,6 +24,7 @@ def get_restaurant_object(restaurant_name,user)
     puts "The restaurant type of food #{restaurant.type_of_food}"
     puts "The city is #{restaurant.city}"
     puts "The address is #{restaurant.address}"
+    puts "The available times are #{restaurant.timing}"
     puts "\n"
     answer = @prompt.yes?("Would you like to add this restaurant into your list?")
     user = User.find(user.id)
