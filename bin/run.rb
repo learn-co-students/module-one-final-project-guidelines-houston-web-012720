@@ -4,7 +4,7 @@ require_relative '../config/environment'
 
 def welcome
     a = Artii::Base.new
-    puts a.asciify("Wellcome to Restaurant Finder").red
+    puts a.asciify("Welcome to Restaurant Finder").red
     puts "Please enter your name"
     name = gets.chomp.split(" ").collect{|name| name.capitalize}.join(" ")
     User.all.map{|user| user.user_name}.include?(name) ? user = User.find_by(user_name: name) : user = User.create(user_name: name)
@@ -25,30 +25,22 @@ def get_restaurant_object(restaurant_name,user)
     puts "The city is #{restaurant.city}"
     puts "The address is #{restaurant.address}"
     puts "\n"
-    puts "Would you like to add this restaurant into your list (Yes/No)"
-    while true do
-        answer = gets.chomp.split(" ").collect{|answer| answer.capitalize}.join(" ")
-        case answer
-        when "Yes" 
-            if user.restaurants.map{|restaurant| restaurant.restaurant_name}.include?(restaurant.restaurant_name)
+    answer = @prompt.yes?("Would you like to add this restaurant into your list?")
+    user = User.find(user.id)
+    if answer
+        if user.restaurants.map{|restaurant| restaurant.restaurant_name}.include?(restaurant.restaurant_name)
             puts "You have that restaurant already in your list".green
-                    user.print_out_list
-            else
-                user.add_to_list(restaurant)
-                  puts " #{restaurant.restaurant_name} has now been added to your list!".green
-            end 
-        when "No"
+            user.print_out_list
         else
-            puts "Invalid input please enter Yes or No to add restaurant to your lists"
-            answer = gets.chomp.split(" ").collect{|answer| answer.capitalize}.join(" ")
-            if answer == "Yes"
-                user.add_to_list(restaurant)
-                puts " #{restaurant.restaurant_name} is now added to your list!".green
-            end 
-           continue if answer == "No" 
-        end
+            puts "#{restaurant.restaurant_name} has now been added to your list!".red
+            user.add_to_list(restaurant)
+        end 
         option(user)
+    else
+        option(user)
+         
     end
+   
 end
 
 def list_of_restaurant(list,user)
