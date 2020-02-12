@@ -27,7 +27,7 @@ class APIScrapper
     def self.create_places(result)
         result["items"].each { |item|
             Viewer.header
-            spinner = TTY::Spinner.new("#{Place.count} places scrapped from #{Tag.count} categories...[:spinner] ", format: :classic)
+            spinner = TTY::Spinner.new("#{Place.count} places scraped from #{Tag.count} categories...[:spinner] ", format: :classic)
             spinner.auto_spin
             place = JSON.parse(open(item["href"]).read)  
             if place["contacts"].has_key?("website")
