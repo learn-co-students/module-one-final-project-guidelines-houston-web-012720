@@ -6,18 +6,13 @@ class Place < ActiveRecord::Base
     has_many :keywords, through: :matches
     
     def relevance
-
-        self.tags.reduce(0) {|memo, tag|
-            tag.relevance ? memo + tag.relevance : memo
-        }
-
+        self.tags.reduce(0) {|memo, tag| tag.relevance ? memo + tag.relevance : memo}
     end
 
     def self.get_10_most_relevant
         Place.all.sort { |a,b|
             b.relevance <=> a.relevance
         }.first(10)
-      
     end
 
     def tag_titles #returns all tag names associated with place
