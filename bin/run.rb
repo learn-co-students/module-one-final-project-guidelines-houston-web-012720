@@ -2,7 +2,7 @@ require_relative '../config/environment'
 # require_all
 $prompt = TTY::Prompt.new
 
-def wellcome
+def welcome
     a = Artii::Base.new
     puts a.asciify("Wellcome to Restaurant Search").red
     puts "Please puts your name below"
@@ -20,7 +20,7 @@ def select_restaurant(location)
    Restaurant.where('location = ?',location).pluck(:restaurant_name)
 end
 
-def get_object(name,user)
+def get_restaurant_object(name,user)
     restaurant = Restaurant.find_by(restaurant_name: name)
     puts "The restaurant name is #{restaurant.restaurant_name}"
     puts "The location is #{restaurant.location}"
@@ -52,7 +52,7 @@ end
 
 def list_of_restaurant(list,user)
     input = $prompt.select("abc".blue,list)
-    get_object(input,user)
+    get_restaurant_object(input,user)
 end
 
 def search_location(user)
@@ -105,5 +105,5 @@ end
 # end
 # puts "Select option"
 # option(user)
-wellcome
+welcome
 

@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
     end
 
     def delete_from_lists(restaurant_name)
-        restaurant_id = restaurants.map{|restaurant| restaurant.id}
-        lists.destroy(restaurant_id)
+        restaurant = restaurants.find_by(restaurant_name: restaurant_name)
+        restaurants.destroy(restaurant.id)
     end
 end
