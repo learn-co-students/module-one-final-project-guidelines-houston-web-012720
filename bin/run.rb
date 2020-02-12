@@ -29,7 +29,7 @@ def get_restaurant_object(restaurant_name,user)
     while true do
         answer = gets.chomp.split(" ").collect{|answer| answer.capitalize}.join(" ")
         case answer
-        when "Yes" || "yes"
+        when "Yes" 
             if user.restaurants.map{|restaurant| restaurant.restaurant_name}.include?(restaurant.restaurant_name)
             puts "You have that restaurant already in your list".green
                     user.print_out_list
@@ -37,10 +37,15 @@ def get_restaurant_object(restaurant_name,user)
                 user.add_to_list(restaurant)
                   puts " #{restaurant.restaurant_name} has now been added to your list!".green
             end 
-        when "No" || "no"
+        when "No"
         else
             puts "Invalid input please enter Yes or No to add restaurant to your lists"
             answer = gets.chomp.split(" ").collect{|answer| answer.capitalize}.join(" ")
+            if answer == "yes"
+                user.add_to_list(restaurant)
+                puts " #{restaurant.restaurant_name} is now added to your list!".green
+            end 
+           break if answer == "no" 
         end
         option(user)
     end
