@@ -1,5 +1,4 @@
 require_relative 'global'
-require 'pry'
 
 $current_student_id = 0
 
