@@ -66,8 +66,11 @@ class Main
       @@current_trainer = user
       puts "Welcome back #{@@current_trainer.name}!"
     else
-      puts "That is not a Trainer i've ever heard of!".colorize(:red)
-      exit 
+      puts "That is not a Trainer i've ever heard of!"
+      sleep(2)
+      Main.clear_term
+      Main.draw_title
+      Main.draw_main_menu
     end  
   end
 
@@ -95,12 +98,23 @@ class Main
     Main.slow_puts("Myself...I study " + "POKEMON".colorize(:yellow) + 
                    " as a profession."); Main.halt 
 
+    sleep(1.5)
+
   end  
 
   def self.new_trainer
 
-    puts
-    name = @@prompt.ask("First, what is your name?".colorize(:green))
+    while true
+      puts
+      name = @@prompt.ask("First, what is your name?")
+
+      if Trainer.all.find { |t| t.name == name }
+        puts "That Trainer already exists!"
+        sleep(1.5)
+      else
+        break
+      end  
+    end
 
     Main.clear_term
     Main.slow_puts("Right! So your name is #{name}!")
@@ -110,7 +124,7 @@ class Main
     Main.slow_puts("A world of dreams and adventures with " + 
                    "POKEMON".colorize(:yellow) + " awaits! Let's go!")   
 
-    sleep(2) 
+    sleep(1.5) 
 
     @@current_trainer = Trainer.create(name: name, area_id: 1)
 
@@ -151,7 +165,19 @@ class Main
       Main.halt
     end 
 
-  end  
+    Main.slow_puts("This POKEMON looks really energetic!"); Main.halt
+    Main.slow_puts("You'll need POKE BALLS to catch POKEMON"); Main.halt
+    Main.slow_puts("So I will give you a few of mine!"); Main.halt
+
+    @@current_trainer.update(pokeball: 10)
+    puts
+    puts "You recieved 10 POKE BALLS from PROF OAK!"
+    puts
+    sleep(1.5)
+
+    help
+
+  end
 
 end  
 
