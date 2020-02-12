@@ -15,7 +15,26 @@ mood = $prompt.select("What is your mood?", [1, 2, 3, 4, 5])
 
 j1 = JournalEntry.new(student_id: $current_student_id, what_did_i_learn: what_did_i_learn, what_was_unclear: what_was_unclear, confidence_level: confidence_level, feelings_on_topic: feelings_on_topic, feelings_general: feelings_general, mood: mood)
 
-binding.pry
-0
+
+def change_entry
+    $prompt.yes?("Would you like to make any changes?")
+end
+
+if change_entry
+    puts "going to edit page now"
+end
+
+def save_entry(entry)
+    $prompt.yes?("Would you like to save this entry?")
+end
+
+if save_entry(j1)
+    j1.save
+else
+    change_entry
+end
+
+# binding.pry
+# 0
 # JournalEntry.create(student_id: $current_student_id, lecture_id: 1, date_created: 00000000, what_did_i_learn: "test", what_was_unclear: "nothing", confidence_level: 3, feelings_on_topic: "Happy", feelings_general: "Unhappy", mood: 5)
 
