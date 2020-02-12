@@ -3,15 +3,11 @@ require_relative '../config/environment'
 $prompt = TTY::Prompt.new
 
 def welcome
-    a = Artii::Base.new
+    a = Artii::Base.new :font => 'slant'
     puts a.asciify("Wellcome to Restaurant Search").red
     puts "Please puts your name below"
     name = gets.chomp.split(" ").collect{|name| name.capitalize}.join(" ")
-    if !User.pluck(:user_name).include?(name)
-        user = User.create(user_name: name)
-    else
-        user = User.where(user_name: name).take 
-    end
+    User.all.map{|user| user.user_name}.include?(name) ? user = User.where(user_name: name).take : user = User.create(user_name: name) 
     puts "Select option"
     option(user)
 end
@@ -19,38 +15,36 @@ end
 def select_restaurant(city)
     #Grabs the restaurant name from that location of the user and returns an array
      Restaurant.where(city: city).pluck(:restaurant_name)
-    # binding.pry
 end
 
-def get_restaurant_object(name,user)
-    restaurant = Restaurant.find_by(restaurant_name: name)
-    puts "The restaurant name is #{restaurant.restaurant_name}"
-    puts "The restaurant type of food #{restaurant.type_of_food}"
-    puts "The city is #{restaurant.city}"
-    puts "The address is #{restaurant.address}"
+def get_restaurant_object(restaurant_name,user)
+    restaurant = Restaurant.find_by(restaurant_name: restaurant_name)
     puts "\n"
-    puts "Would you like to add this restaurant into your list (Yes/No)"
-    answer = gets.chomp.split(" ").collect{|answer| answer.capitalize}.join(" ")
-    while true do
-        if answer == "Yes" 
-            if !user.restaurants.pluck(:restaurant_name).include?(restaurant.restaurant_name)
-                user.add_to_list(restaurant)
-                puts "Add to #{restaurant.restaurant_name} to #{user.user_name} list"
-                option(user)
-            else
-                user.print_out_list
-                option(user)
-            end
-            break
-        elsif answer == "No"
-            option(user)
-            break
+    puts "|---------------------------------------------------------------------------------------------|"
+    puts "|" + "                #{restaurant.restaurant_name}".blue
+    puts "|\n"
+    puts "|     Location:"
+    puts "|         #{restaurant.address}"
+    puts "|         #{restaurant.city}"
+    puts "|     Cuisines:"
+    puts "|         #{restaurant.type_of_food}"
+    puts "|\n"
+    puts "|---------------------------------------------------------------------------------------------|"
+    puts "\n"
+    answer = $prompt.yes?("Would you like to add this restaurant into your list")
+    if answer
+        user = User.find(user.id)
+        if user.restaurants.map{|restaurant| restaurant.restaurant_name}.include?(restaurant.restaurant_name)
+            puts "This restaurant is already in your list".red
+            user.print_out_list
         else
-            puts "Invalid input! please enter " + "Yes".red + " or "+ "No".red + " to add restaurant to your lists"
-            answer = gets.chomp.split(" ").collect{|answer| answer.capitalize}.join(" ")
-        end 
+            puts "Add to #{restaurant.restaurant_name} to #{user.user_name} list".green
+            user.add_to_list(restaurant) 
+        end
+        option(user)
+    else 
+        option(user)
     end
-       
 end
 
 def list_of_restaurant(list,user)
@@ -75,6 +69,7 @@ def delete_from_user_list(user)
         puts "Please input your restaurant id you want to remove from the list."
         id = gets.chomp
         user.delete_from_lists(id)
+        puts "Id: #{id} is now deleted off your list".green
         option(user)
     end
 end
@@ -99,12 +94,4 @@ def option(user)
     end
 end
 
-
-
-# puts "Please puts your name below"
-# name = gets.chomp
-# user = User.create(user_name: name)
-# puts "Hi #{name}, puts your current location."
-# location = gets.chomp
-# list_of_restaurant(select_restaurant(location))
 welcome 
