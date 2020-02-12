@@ -25,7 +25,8 @@ tags = Tag.get_tag_names
 tags.unshift("DONE SELECTING TAGS")
 positive_tags = []
 
-while  Tag.with_relevance.count < 5 do  
+if data_was_cleared
+while Tag.with_relevance.count < 5 do
     tag = Viewer.prompt.select("Which tags are relevant to your search, positively or negatively? Please select up to 5 tags.\n", tags)
     if tag == "DONE SELECTING TAGS"
         break
@@ -36,6 +37,7 @@ while  Tag.with_relevance.count < 5 do
         Tag.find_by(title: tag).update(relevance: rel)
     end
     Viewer.header
+end
 end
 
 ###################### 3rd screen, print results
@@ -52,8 +54,7 @@ result.each_with_index { |place, index|
 t = TTY::Table.new table
 
 #  box = TTY::Box.success(t)
- box = TTY::Box.frame t.render(:ascii), align: :center, title: {top_left: "Here are the top 10 results:", bottom_right: 'v1.0'}, style: {fg: :bright_yellow, bg: :blue, border: { fg: :bright_yellow, bg: :blue}}
-
+box = TTY::Box.frame t.render(:ascii,align: :center ), align: :center, title: {top_left: "Here are the top 10 results:", bottom_right: 'v1.0'}, style: {fg: :bright_yellow, bg: :blue, border: { fg: :bright_yellow, bg: :blue}}
 puts box
 
 
