@@ -1,7 +1,7 @@
 # Restaurant.destroy_all
 # User.destroy_all
 # List.destroy_all
-
+2323232
 
 ##abcedoa
 # Restaurant.create(restaurant_name: "Olive Garden", location: "Houston", type_of_food: "Italian")
