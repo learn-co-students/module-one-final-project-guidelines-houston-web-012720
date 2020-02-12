@@ -128,7 +128,17 @@ class Main
     when "Charmander"
       puts
       Main.slow_puts("So you want the fire POKEMON, Charmander?"); Main.halt
-    end
+    end  
+
+    Main.slow_puts("This POKEMON looks really energetic!"); Main.halt
+    Main.slow_puts("You'll need POKE BALLS to catch POKEMON"); Main.halt
+    Main.slow_puts("So I will give you a few of mine!"); Main.halt
+
+    @@current_trainer.update(pokeball: 10)
+    puts
+    puts "You recieved 10 POKE BALLS from PROF OAK!"
+    puts
+    sleep(1.5)
 
   end
 

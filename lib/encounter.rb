@@ -14,7 +14,14 @@ module Encounter
 
     def throw_pokeball
       if $current_pokemon
-        puts "You throw a pokeball at the wild #{$current_pokemon.name}!"
+        if trainer.pokeball > 0
+          puts "You throw a pokeball at the wild #{$current_pokemon.name}!"
+          trainer.pokeball -= 1
+          trainer.save
+        else
+          puts "You have run out of Pokeballs!"
+          return
+        end  
       else
         puts "There is no pokemon to catch!"
         return
@@ -34,6 +41,11 @@ module Encounter
        
     end
 
+    def flee
+      $current_pokemon = nil
+      puts "You flee from the battle!"
+    end  
+
     def caught_pokeball
       puts "You caught the wild #{$current_pokemon.name}!"
       Main.class_variable_get(:@@current_trainer).pokemons.create(name: $current_pokemon.name)
@@ -42,6 +54,7 @@ module Encounter
 
     def pokemon_flee
       puts "The wild #{$current_pokemon.name} has fled."
+      $current_pokemon = nil
       $in_battle = false
     end
 

@@ -23,7 +23,9 @@ module Command
         when "walk"
             Main.walk_in_grass
         when "throw pokeball"
-            Main.throw_pokeball 
+            Main.throw_pokeball
+        when "flee"
+            Main.flee    
         when "list pokemon"
             list_pokemon    
         when "help"
@@ -118,7 +120,7 @@ module Command
     def menu
       puts
       puts "-MENU-----------------"
-      choice = @@prompt.select("", "Pokemon", "Release Pokemon", "Quit")
+      choice = @@prompt.select("", "Pokemon", "Release Pokemon", "Quit", "Items")
       puts
 
       case choice
@@ -126,6 +128,8 @@ module Command
         list_pokemon
       when "Release Pokemon"
         release_pokemon
+      when "Items"
+        puts "Pokeballs: #{trainer.pokeball}"  
       when "Quit"
         Main.exit_game
       end
