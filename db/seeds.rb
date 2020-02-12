@@ -16,21 +16,14 @@
 # Restaurant.create(restaurant_name: "Valentina's Tex Mex", location: "Austin", type_of_food: "Mexican")
 
 
-response = RestClient.get("https://developers.zomato.com/api/v2.1/search?entity_id=280&entity_type=city", header={"user-key": "a9252d17baa2869cc9fb47f0db114837"}) 
-restaurant_info = JSON.parse(response)
-# restaurant_info = {
-#     "restaurants": [
-#         {
-#             "restaurant1": {"name": "name alkbgl"}
-#         },
-#         {
-#             "restaurant2": {"name": "name 2"}
-#         }
-#     ]
-# }
-binding.pry
-0
-
-
-
-
+ response = RestClient.get('https://developers.zomato.com/api/v2.1/search?entity_id=277&entity_type=city&collection_id=1', headers={'user-key': "a9252d17baa2869cc9fb47f0db114837"})
+ restaurant = JSON.parse(response)
+ restaurant["restaurants"].each do |restaurant|
+    name = restaurant["restaurant"]["name"]
+    city = restaurant["restaurant"]["location"]["city"]
+    address = restaurant["restaurant"]["location"]["address"]
+    cuisines = restaurant["restaurant"]["cuisines"]
+    Restaurant.create(restaurant_name: name, city: city, address: address, type_of_food: cuisines)
+ end
+#  binding.pry
+#  0
