@@ -3,5 +3,5 @@ class Area < ActiveRecord::Base
     has_many :pokemons
     has_many :trainers, through: :pokemons
 
-    def initialize 
+    
 end

@@ -5,7 +5,7 @@ class Main
  
   extend Util
   extend Command
-  extend Encounter 
+  extend Encounter
 
   # Declaring artii and tty-prompt gems
   @@artii = Artii::Base.new :font => 'doom' # Change font
@@ -66,7 +66,10 @@ class Main
       puts "Welcome back #{@@current_trainer.name}!"
     else
       puts "That is not a Trainer i've ever heard of!"
-      exit 
+      sleep(2)
+      Main.clear_term
+      Main.draw_title
+       Main.draw_main_menu
     end  
   end
 
@@ -104,6 +107,10 @@ class Main
     @@current_trainer = Trainer.create(name: name, area_id: 1)
 
   end
+
+  def self.current_trainer
+    @@current_trainer
+  end  
 
 end  
 
