@@ -3,7 +3,7 @@
 # List.destroy_all
 
 
-#########
+
 # Restaurant.create(restaurant_name: "Olive Garden", location: "Houston", type_of_food: "Italian")
 # Restaurant.create(restaurant_name: "Indigo", location: "Houston", type_of_food: "Italian")
 # Restaurant.create(restaurant_name: "La Lucha", location: "Houston", type_of_food: "Mexican")
