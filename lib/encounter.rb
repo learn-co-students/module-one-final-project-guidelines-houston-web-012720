@@ -5,10 +5,21 @@ module Encounter
 
     $current_pokemon = nil
 
+    @@type_color
+
+    def color_by_type
+      case $current_pokemon.types[0].type.name
+      when "fire"
+        @@type_color == :red
+      else 
+        @@type_color == :yellow  
+      end  
+    end
+
     def random_encounter
       selection = Main.class_variable_get(:@@current_trainer).area.pokemon_list.split(", ").sample
       $current_pokemon = PokeApi.get(pokemon: selection)
-      puts "A wild #{$current_pokemon.name} has appeared!"
+      puts "A wild " + "#{$current_pokemon.name}".colorize(@@type_color) + " has appeared!"
       $in_battle = true
     end
 
