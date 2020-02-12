@@ -60,7 +60,7 @@ def search_location(user)
 end
 
 def delete_function(user)
-    if user.lists.empty?
+    if user.restaurants.empty?
         puts "You don't have any restaurant inside your list to delete.".red
         user.print_out_list
         option(user)
