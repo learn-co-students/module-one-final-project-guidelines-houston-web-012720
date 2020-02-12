@@ -54,6 +54,7 @@ class Main
   def self.new_game
     Main.draw_intro
     Main.new_trainer
+    Main.pick_starter
   end
 
   def self.load_game
@@ -104,6 +105,29 @@ class Main
     @@current_trainer = Trainer.create(name: name, area_id: 1)
 
   end
+
+  def self.pick_starter
+    puts
+    Main.slow_puts("Here, RED! There are 3 POKEMON here! They are inside the POKE BALLS."); Main.halt
+    Main.slow_puts("When I was young, I was a serious POKEMON trainer."); Main.halt
+    Main.slow_puts("In my old age, I have only 3 left, but you can have one! Choose!"); Main.halt
+    puts
+
+    choice = @@prompt.select("", "Squirtle", "Bulbasaur", "Charmander")
+
+    case choice
+    when "Squirtle"
+      puts
+      Main.slow_puts("So you want the water POKEMON, Squirtle?"); Main.halt
+    when "Bulbasaur"  
+      puts
+      Main.slow_puts("So you want the grass POKEMON, Bulbasaur?"); Main.halt
+    when "Charmander"
+      puts
+      Main.slow_puts("So you want the fire POKEMON, Charmander?"); Main.halt
+    end 
+
+  end  
 
 end  
 

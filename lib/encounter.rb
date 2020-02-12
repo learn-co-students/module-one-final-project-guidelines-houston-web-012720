@@ -23,7 +23,7 @@ module Encounter
       chance_to_flee = rand(9)
       chance_to_catch = rand(9)
 
-      if chance_to_catch > 6
+      if chance_to_catch > 5
         caught_pokeball
       else
         puts "You failed to catch the #{$current_pokemon.name}.."

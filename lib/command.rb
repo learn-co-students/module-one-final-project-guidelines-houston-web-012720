@@ -22,26 +22,43 @@ module Command
             Main.throw_pokeball 
         when "list pokemon"
             list_pokemon    
+        when "help"
+            help    
         when "quit"
             Main.exit_game    
+        else
+            puts "That is not a valid command!"
+            puts "Type 'help' to for a list of commands."
         end
     end
 
     def go_north
       return if in_battle_check
-      Main.class_variable_get(:@@current_trainer).area_id = 
-        Main.class_variable_get(:@@current_trainer).area.north_area_id
-      Main.class_variable_get(:@@current_trainer).save
+      
+      if Main.class_variable_get(:@@current_trainer).area.north_area_id
+        Main.class_variable_get(:@@current_trainer).area_id = 
+          Main.class_variable_get(:@@current_trainer).area.north_area_id
+        Main.class_variable_get(:@@current_trainer).save
+      else
+        puts "You can't go that way!"
+        return
+      end  
     end
 
     def go_south
       return if in_battle_check
-      Main.class_variable_get(:@@current_trainer).area_id = 
-        Main.class_variable_get(:@@current_trainer).area.south_area_id
-      Main.class_variable_get(:@@current_trainer).save
+
+      if Main.class_variable_get(:@@current_trainer).area.south_area_id
+        Main.class_variable_get(:@@current_trainer).area_id = 
+          Main.class_variable_get(:@@current_trainer).area.south_area_id
+        Main.class_variable_get(:@@current_trainer).save
+      else
+        puts "You can't go that way!"
+      end  
     end
 
     def walk_in_grass
+      return if Main.class_variable_get(:@@current_trainer).area.pokemon_list == nil
       return if in_battle_check
       Main.random_encounter
     end
@@ -68,6 +85,17 @@ module Command
       else
         return false
       end  
+    end 
+
+    def help
+      puts
+      puts "- Commands -" 
+      puts "go north - Goes north of your current location."
+      puts "go south - Goes south of your current location."
+      puts "walk - Walk in the tall grass to look for Pokemon."
+      puts "menu - Opens a menu with more additional options."
+      puts "quit - Quits the game."
+      puts
     end  
 
 end
