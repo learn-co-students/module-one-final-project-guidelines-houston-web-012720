@@ -2,14 +2,16 @@ require_relative '../config/environment'
 require 'open-uri'
 
 
-
-
 ###################### Initial screen, select category
 
 Viewer.header
 options = ["Eat and Drink","Going Out-Entertainment","Sights and Museums","Natural and Geographical","Transport","Accommodations","Leisure and Outdoor","Shopping","Business and Services","Facilities","Areas and Buildings"]
+data_was_cleared = false
 if Place.count > 0 && Viewer.prompt.yes?("There is a #{Place.count} places left from a previous search already exist do you want to use it?")
-    puts "Using data from the previous search"
+    if Viewer.prompt.yes?("Would you like to reselect relevance?")
+        Tag.wipe_relevance
+        data_was_cleared = true
+    end
 else
     category = Viewer.prompt.select("Hello, what do you want to choose?", options)
     puts "You've chosen #{category}, Great!"
@@ -17,9 +19,12 @@ else
     APIScrapper.get_data(category)
 end
 
+###################### If keeping data, clear tag relevance?
+# Viewer.header
 
 ###################### 2nd screen, choose Positive tags
 Viewer.header
+puts "Using data from the previous search" if data_was_cleared
 tags = Tag.get_tag_names
 positive_tags = []
 
@@ -29,7 +34,6 @@ while  Tag.with_relevance.count < 5 do
     rel =  Viewer.prompt.slider('Set the importance of the tag',  min: -100, max: 100, step: 5)
     Tag.find_by(title: tag).update(relevance: rel)
     Viewer.header
-
 end
 
 result = Place.get_10_most_relevant
