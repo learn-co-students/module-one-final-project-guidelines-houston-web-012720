@@ -118,6 +118,18 @@ module Command
       end  
     end 
 
+    def pokemon_info
+      trainer.pokemons.each do |p|
+        poke = PokeApi.get(pokemon: p.name)
+        puts p.name
+        puts "height: #{poke.height}"
+        puts  "weight: #{poke.weight}"
+        puts 
+      end
+    end
+
+
+
     def help
       puts
       puts "- Commands -" 
@@ -137,7 +149,7 @@ module Command
 
       case choice
       when "Pokemon"
-        list_pokemon
+        pokemon_info
       when "Release Pokemon"
         release_pokemon
       when "Items"
