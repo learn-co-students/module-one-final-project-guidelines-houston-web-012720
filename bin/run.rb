@@ -66,7 +66,7 @@ def delete_function(user)
         option(user)
     else
         user.print_out_list
-        list = ["Clear restaurant by name", "Clear all restaurants by location","Clear all your restaurants from lists","Exit"]
+        list = ["Clear restaurant by Id", "Clear all restaurants by location","Clear all your restaurants from lists","Exit"]
         input = @prompt.select("*".blue,list)
         case input 
         when list[0]
