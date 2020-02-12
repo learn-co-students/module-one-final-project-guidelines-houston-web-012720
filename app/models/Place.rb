@@ -1,3 +1,5 @@
+require 'pry'
+
 class Place < ActiveRecord::Base
     has_many :place_tag_joiners
     has_many :tags, through: :place_tag_joiners
@@ -10,8 +12,9 @@ class Place < ActiveRecord::Base
     end
 
     def is_internal_link?(link)
-        exceptions = ["facebook.com"]
-
+        exceptions = ["www.facebook.com", "facebook.com", "www.google.com", "google.com"]
+        host = URI.parse(link).host
+        URI.parse(self.website).host == host && !exceptions.include?(host)
     end
 
 
