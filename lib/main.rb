@@ -129,7 +129,7 @@ class Main
 
     sleep(1.5) 
 
-    @@current_trainer = Trainer.create(name: name, area_id: 1)
+    @@current_trainer = Trainer.create(name: name, area_id: 1, pokeball: 10)
 
   end
 
@@ -189,7 +189,7 @@ class Main
     Main.slow_puts("You'll need POKE BALLS to catch POKEMON"); Main.halt
     Main.slow_puts("So I will give you a few of mine!"); Main.halt
 
-    @@current_trainer.update(pokeball: 10)
+    # @@current_trainer.update(pokeball: 10)
     puts
     puts "You recieved 10 POKE BALLS from PROF OAK!"
     puts

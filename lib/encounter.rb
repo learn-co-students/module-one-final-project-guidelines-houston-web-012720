@@ -6,55 +6,56 @@ module Encounter
     @@prompt = TTY::Prompt.new
 
     $current_pokemon = nil
+    $type_color = :white
 
     def color_by_type
       case $current_pokemon.types[0].type.name
       when "fire"
-        @@type_color = :red
+        $type_color = :red
       when "water"  
-        @@type_color = :blue
+        $type_color = :blue
       when "grass"  
-        @@type_color = :green
+        $type_color = :green
       when "rock"  
-        @@type_color = :magenta
+        $type_color = :magenta
       when "flying"  
-        @@type_color = :white
+        $type_color = :white
       when "psychic"  
-        @@type_color = :magenta
+        $type_color = :magenta
       when "dark"  
-        @@type_color = :light_black
+        $type_color = :light_black
       when "steel"  
-        @@type_color = :white
+        $type_color = :white
       when "ice"  
-        @@type_color = :light_cyan
+        $type_color = :light_cyan
       when "fairy"  
-        @@type_color = :light_magenta
+        $type_color = :light_magenta
       when "ghost"  
-        @@type_color = :magenta
+        $type_color = :magenta
       when "ground"  
-        @@type_color = :light_black
+        $type_color = :light_black
       when "poison"  
-        @@type_color = :light_magenta
+        $type_color = :light_magenta
       when "bug"  
-        @@type_color = :light_green
+        $type_color = :light_green
       when "electric"  
-        @@type_color = :light_yellow
+        $type_color = :light_yellow
       when "dragon"  
-        @@type_color = :light_red
+        $type_color = :light_red
       when "fighting"  
-        @@type_color = :light_cyan
+        $type_color = :light_cyan
       else
-        @@type_color = :white  
+        $type_color = :white  
       end 
 
-      @@type_color
+      $type_color
     end
 
     def random_encounter
       selection = Main.class_variable_get(:@@current_trainer).area.pokemon_list.split(", ").sample
       $current_pokemon = PokeApi.get(pokemon: selection)
       color_by_type
-      puts "A wild " + "#{$current_pokemon.name}".colorize(@@type_color) + " has appeared!"
+      puts "A wild " + "#{$current_pokemon.name}".colorize($type_color) + " has appeared!"
       $in_battle = true
     end
 
@@ -63,6 +64,7 @@ module Encounter
         color_by_type
         if trainer.pokeball > 0
           puts "You throw a pokeball at the wild #{$current_pokemon.name}!"
+          puts
           trainer.pokeball -= 1
           trainer.save
           
@@ -87,6 +89,7 @@ module Encounter
       if chance_to_catch > 3
         caught_pokeball
       else
+        sleep(1)
         puts "You failed to catch the #{$current_pokemon.name}.."
         sleep(2)
         if chance_to_flee > 7
@@ -130,7 +133,7 @@ module Encounter
      
       color_by_type
       puts "You are facing a wild " + 
-           "#{$current_pokemon.name}".colorize(@@type_color) +
+           "#{$current_pokemon.name}".colorize($type_color) +
            "!"
 
       puts
