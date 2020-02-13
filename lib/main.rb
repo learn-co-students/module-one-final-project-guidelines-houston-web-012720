@@ -144,31 +144,44 @@ class Main
     Main.slow_puts("In my old age, I have only 3 left, but you can have one! Choose!"); Main.halt
     puts
 
-    choice = @@prompt.select("", "Squirtle".colorize(:blue), 
+    while true
+      choice = @@prompt.select("", "Squirtle".colorize(:blue), 
                              "Bulbasaur".colorize(:green), 
                              "Charmander".colorize(:red))
 
-    case choice
-    when "Squirtle".colorize(:blue)
-      puts
-      Main.slow_puts("So you want the water " + 
-                     "POKEMON".colorize(:yellow) + 
-                     ", " + "Squirtle".colorize(:blue) + "?") 
-      Main.halt
-      
-    when "Bulbasaur".colorize(:green)  
-      puts
-      Main.slow_puts("So you want the grass " + 
-                     "POKEMON".colorize(:yellow) + 
-                     ", " + "Bulbasaur".colorize(:green) + "?") 
-      Main.halt
-    when "Charmander".colorize(:red)
-      puts
-      Main.slow_puts("So you want the fire " + 
-                     "POKEMON".colorize(:yellow) + 
-                     ", " + "Charmander".colorize(:red) + "?") 
-      Main.halt
-    end 
+      case choice
+      when "Squirtle".colorize(:blue)
+        puts
+        if @@prompt.yes?("So you want the water " + 
+                         "POKEMON".colorize(:yellow) + 
+                         ", " + "Squirtle".colorize(:blue) + "?") 
+          break
+        else
+          Main.clear_term  
+        end
+
+      when "Bulbasaur".colorize(:green)  
+        puts
+        if @@prompt.yes?("So you want the grass " + 
+                         "POKEMON".colorize(:yellow) + 
+                         ", " + "Bulbasaur".colorize(:green) + "?") 
+          break
+        else
+          Main.clear_term
+        end
+
+      when "Charmander".colorize(:red)
+        puts
+        if @@prompt.yes?("So you want the fire " + 
+                         "POKEMON".colorize(:yellow) + 
+                         ", " + "Charmander".colorize(:red) + "?")
+          break  
+        else
+          Main.clear_term
+        end
+
+      end
+    end
 
     @@current_trainer.pokemons.create(name: choice.uncolorize.downcase)
 
