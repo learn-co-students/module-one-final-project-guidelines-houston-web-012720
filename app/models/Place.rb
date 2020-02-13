@@ -7,16 +7,24 @@ class Place < ActiveRecord::Base
     has_many :matches, through: :pages
     has_many :keywords, through: :matches
     
-    def relevance
+    def tag_relevance
         self.tags.reduce(0) {|memo, tag| tag.relevance ? memo + tag.relevance : memo}
     end
 
-    def is_internal_link?(link)
+    def keyword_relevance
+        self.matches.reduce(0) {|memo, match| memo + (match.keyword.relevance * match.count)}
+    end
+
+    def relevance
+        final_relevance = tag_relevance + keyword_relevance
+    end
+
+    def is_internal_link?(link) #replace with incoming webpage.domain
         exceptions = ["www.facebook.com", "www.google.com"]
         link_host = URI.parse(link).host
-        website_host = URI.parse(self.website).host
         link_host.prepend("www.") unless link_host.starts_with?("www.")
-        website_host.prepend("www.") unless website_host.starts_with?("www.")
+        website_host = URI.parse(self.website).host #these go in creating webpage domain
+        website_host.prepend("www.") unless website_host.starts_with?("www.") #these go in creating webpage domain
         website_host == link_host && !exceptions.include?(link_host)
     end
 
