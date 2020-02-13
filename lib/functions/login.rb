@@ -2,7 +2,7 @@ require_relative 'global'
 
 # $current_student_id = 0
 
-def user_info
+def login
     temp_username = $prompt.ask('What is your username?', deafult: ENV['USER'])
     if !Student.find_by(username: temp_username)
         puts "Sorry, username #{temp_username} is not yet created. Please create new user"
@@ -21,7 +21,7 @@ def user_info
     end
 end
 
-# user_info
+# login
 # binding.pry
 0
 # user_info
