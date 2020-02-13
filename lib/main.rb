@@ -156,6 +156,7 @@ class Main
                      "POKEMON".colorize(:yellow) + 
                      ", " + "Squirtle".colorize(:blue) + "?") 
       Main.halt
+      
     when "Bulbasaur".colorize(:green)  
       puts
       Main.slow_puts("So you want the grass " + 
@@ -169,6 +170,8 @@ class Main
                      ", " + "Charmander".colorize(:red) + "?") 
       Main.halt
     end 
+
+    @@current_trainer.pokemons.create(name: choice.uncolorize.downcase)
 
     Main.slow_puts("This POKEMON looks really energetic!"); Main.halt
     Main.slow_puts("You'll need POKE BALLS to catch POKEMON"); Main.halt
