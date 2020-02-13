@@ -160,3 +160,11 @@ vc = Area.find_or_create_by(name: "Vermilion City",
                              pokemon_list: nil,
                              water_list: nil) 
 
+#### ROUTE 13 ################ ID:
+r13 = Area.find_or_create_by(name: "Route 13", 
+                             north_area_id: nil, 
+                             south_area_id: nil, 
+                             east_area_id: 28, 
+                             west_area_id: , 
+                             pokemon_list: nil,
+                             water_list: nil) 
