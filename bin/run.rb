@@ -19,6 +19,7 @@ else
     puts "You've chosen #{category}, great!"
     Viewer.header
     APIScrapper.get_data(category)
+    
 end
 
 

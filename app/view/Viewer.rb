@@ -6,8 +6,8 @@ class Viewer
 
 
 def self.header
-    system ('clear')
-    puts @@pastel.magenta.bold(@@a.asciify("Cora The Chooser"))
+    # system ('clear')
+    # puts @@pastel.magenta.bold(@@a.asciify("Cora The Chooser"))
 end
 
 def self.prompt
