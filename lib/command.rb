@@ -9,12 +9,19 @@ module Command
     end  
 
     def get_command
+      while $in_battle
+        battle_menu
+      end
+
       @@prompt.ask("#{trainer.name} ".yellow.bold + "$".cyan.bold)
     end
 
     def do_command(cmd)
+
         Main.clear_term
-       puts  "Type 'help' to for a list of commands."
+
+        puts "Type 'help' for a list of commands."
+
         case cmd 
         when "go north"
             go_north
@@ -31,19 +38,16 @@ module Command
         when "help"
             help   
         when "menu"
-          if $in_battle
-            battle_menu 
-          else
-            menu 
-          end  
+          menu 
         when "quit"
             Main.exit_game    
         when "release pokemon"  
             release_pokemon    
         else
           puts "That is not a valid command!".colorize(:red)
-          puts "Type 'help' to for a list of commands."
+          puts "Type 'help' for a list of commands."
         end
+
     end
 
     def go_north
@@ -73,9 +77,12 @@ module Command
     end
 
     def walk_in_grass
-      return if trainer.area.pokemon_list == nil 
-      return  if in_battle_check
-      Main.random_encounter
+      if trainer.area.pokemon_list == nil
+        puts "There are no Pokemon here!".red.bold
+      else  
+        return  if in_battle_check
+        Main.random_encounter
+      end  
     end
 
     def get_pokeballs
@@ -142,8 +149,10 @@ module Command
       puts "- Commands -" 
       puts "go north - Goes north of your current location."
       puts "go south - Goes south of your current location."
-      puts "walk - Walk in the tall grass to look for Pokemon."
-      puts "menu - Opens a menu with more additional options."
+      puts "walk - Walk in the tall grass to look for Pokemon. (does not work in towns)"
+      puts "menu - Opens a menu with additional options."
+      puts "where am i - Tells you where you are! (duh)"
+      puts "get pokeballs - Gets more pokeballs from Prof Oak! (only works in Pallet Town)"
       puts "quit - Quits the game."
       puts
     end  

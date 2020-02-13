@@ -65,10 +65,17 @@ module Encounter
           puts "You throw a pokeball at the wild #{$current_pokemon.name}!"
           trainer.pokeball -= 1
           trainer.save
+          
+          3.times do
+            sleep(1)
+            puts "*wobble*"
+          end  
+          
         else
           puts "You have run out of Pokeballs!"
           return
-        end  
+        end 
+
       else
         puts "There is no pokemon to catch!"
         return
@@ -97,8 +104,15 @@ module Encounter
     end  
 
     def caught_pokeball
+      sleep(1)
+      puts "*click*"
+      sleep(1)
+      Main.clear_term
+      puts "************************************"
       puts "You caught the wild #{$current_pokemon.name}!"
+      puts "************************************"
       Main.class_variable_get(:@@current_trainer).pokemons.create(name: $current_pokemon.name)
+      sleep(2)
       $current_pokemon = nil
       $in_battle = false
     end
@@ -129,13 +143,15 @@ module Encounter
       when "Throw Pokeball".colorize(:yellow)
         throw_pokeball
       when "Items".colorize(:green)
-        puts "Pokeballs: #{trainer.pokeball}"  
+        puts "Pokeballs: #{trainer.pokeball}" 
+        sleep(2)
       when "Flee".colorize(:red)
         flee
       end
 
       puts
 
-    end  
+      Main.clear_term
 
+    end  
 end
