@@ -1,5 +1,6 @@
 require_relative '../config/environment'
 # require_all
+##
 @prompt = TTY::Prompt.new
 @a = Artii::Base.new
 
