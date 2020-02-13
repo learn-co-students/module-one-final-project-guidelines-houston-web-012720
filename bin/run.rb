@@ -93,7 +93,6 @@ def delete_function(user)
 end
 
 def clear_all_restaurant_by_location(user)
-  
     puts "Select city you want to delete from list"
     list = user.restaurants.pluck(:city).uniq
     input = @prompt.select("*".blue,list)
