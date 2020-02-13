@@ -59,6 +59,14 @@ module Encounter
       $in_battle = true
     end
 
+    def random_water_encounter
+      selection = Main.class_variable_get(:@@current_trainer).area.water_list.split(", ").sample
+      $current_pokemon = PokeApi.get(pokemon: selection)
+      color_by_type
+      puts "A wild " + "#{$current_pokemon.name}".colorize($type_color) + " has appeared!"
+      $in_battle = true
+    end
+
     def throw_pokeball
       if $current_pokemon
         color_by_type

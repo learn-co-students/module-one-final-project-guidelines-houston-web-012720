@@ -25,13 +25,19 @@ module Command
 
         case cmd 
         when "\e[A"
-            go_north
-        when "\e[B" # 
-            go_south    
+            move("north")
+        when "\e[B"  
+            move("south")    
+        when "\e[C" 
+            move("east") 
+        when "\e[D"
+            move("west")  
         when "\t"
             where_am_i   
         when "w"
-            Main.walk_in_grass
+            walk_in_grass
+        when "f"
+            fish    
         when "g"
             get_pokeballs    
         when "h"
@@ -46,31 +52,25 @@ module Command
 
     end
 
-    def go_north
-      return if in_battle_check
-      
-      if trainer.area.north_area_id
-        trainer.area_id = trainer.area.north_area_id
-        trainer.save
-        where_am_i
-      else
-        puts "You can't go that way!".colorize(:red)
-        return
-      end  
-    end
-
-    def go_south
+    def move(direction)
       return if in_battle_check
 
-      if trainer.area.south_area_id
-        trainer.area_id = trainer.area.south_area_id
-        trainer.save
-        where_am_i
-      else
-        puts "You can't go that way!".colorize(:red)
-        return
+      err_msg = "You can't go that way!".red.bold
+
+      if direction == "north"
+        trainer.area.north_area_id ? (trainer.area_id = trainer.area.north_area_id) : (puts err_msg)
+      elsif direction == "south"
+        trainer.area.south_area_id ? (trainer.area_id = trainer.area.south_area_id) : (puts err_msg)
+      elsif direction == "east"
+        trainer.area.east_area_id ? (trainer.area_id = trainer.area.east_area_id) : (puts err_msg)
+      elsif direction == "west"
+        trainer.area.west_area_id ? (trainer.area_id = trainer.area.west_area_id) : (puts err_msg)
       end  
-    end
+
+      trainer.save
+      where_am_i
+
+    end  
 
     def walk_in_grass
       if trainer.area.pokemon_list == nil
@@ -78,6 +78,15 @@ module Command
       else  
         return  if in_battle_check
         Main.random_encounter
+      end  
+    end
+
+    def fish
+      if trainer.area.water_list == nil
+        puts "You can't fish for Pokemon here!".red.bold
+      else
+        return if in_battle_check
+        Main.random_water_encounter
       end  
     end
 
