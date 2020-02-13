@@ -26,14 +26,14 @@ def check_update_current_lecture_id
     end
 end
 
-check_update_current_student_id
-$current_student = Student.find($current_student_id)
+# check_update_current_student_id
+# $current_student = Student.find($current_student_id)
 
-check_update_current_journal_id
-$current_journal = JournalEntry.find($current_journal_id)
+# check_update_current_journal_id
+# $current_journal = JournalEntry.find($current_journal_id)
 
-check_update_current_lecture_id
-$current_lecture = Lecture.find($current_lecture_id)
+# check_update_current_lecture_id
+# $current_lecture = Lecture.find($current_lecture_id)
 
 def rating_stars(rating)
     "\u2606" * rating

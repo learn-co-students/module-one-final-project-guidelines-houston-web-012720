@@ -1,5 +1,5 @@
 require_relative 'global'
-require 'pry'
+# require 'pry'
 
 # $current_student_id = 1
 #lecture_id = lecture_id

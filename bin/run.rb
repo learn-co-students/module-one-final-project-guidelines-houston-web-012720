@@ -2,7 +2,7 @@ require_relative '../config/environment'
 # require_relative '../lib/functions/login.rb'
 # require_relative '../lib/functions/global_id_test.rb'
 
-puts "Welcome to GaalWilliams Code Camp!"
+puts "Welcome to Gaal_Williams Code Camp!"
 def main_menu
     $prompt.select("Select an option below") do |menu|
     menu.choice "Log in", -> {login}
