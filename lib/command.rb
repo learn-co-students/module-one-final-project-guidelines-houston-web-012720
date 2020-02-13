@@ -13,9 +13,10 @@ module Command
         battle_menu
       end
 
-      puts "Type 'help' for a list of commands.".light_black
+      puts "Press 'h' for a list of commands.".light_black
 
-      @@prompt.ask("#{trainer.name} ".yellow.bold + "$".cyan.bold)
+      @@prompt.keypress("#{trainer.name} ".yellow.bold + "$".cyan.bold)
+
     end
 
     def do_command(cmd)
@@ -23,29 +24,24 @@ module Command
         Main.clear_term
 
         case cmd 
-        when "go north"
+        when "\e[A"
             go_north
-        when "go south"
-            go_south   
-        when "where am i"
+        when "\e[B" # 
+            go_south    
+        when "\t"
             where_am_i   
-        when "walk"
+        when "w"
             Main.walk_in_grass
-        when "list pokemon"
-            list_pokemon    
-        when "get pokeballs"
+        when "g"
             get_pokeballs    
-        when "help"
-            help   
-        when "menu"
+        when "h"
+            help    
+        when "\e"
           menu 
-        when "quit"
+        when "Q"
             Main.exit_game    
-        when "release pokemon"  
-            release_pokemon    
         else
           puts "That is not a valid command!".colorize(:red)
-          puts "Type 'help' for a list of commands.".light_black
         end
 
     end
@@ -96,6 +92,7 @@ module Command
     end  
 
     def release_pokemon
+      list_pokemon
       ans = @@prompt.ask("Which Pokemon would you like to release?")
       if found_pokemon = trainer.pokemons.find {|p| p.name == ans}
         found_pokemon.delete
@@ -110,10 +107,11 @@ module Command
     def list_pokemon
       puts
       trainer.pokemons.each do |p|
-        current_pokemon = PokeApi.get(pokemon: p.name)
-        puts "Pokemon: #{current_pokemon.name}"
-        puts "  - Height: #{current_pokemon.height}"
-        puts "  - Weight: #{current_pokemon.weight}"
+        $current_pokemon = PokeApi.get(pokemon: p.name)
+        Main.color_by_type
+        puts "Pokemon: " + "#{$current_pokemon.name}".colorize($type_color)
+        puts "  - Height: #{$current_pokemon.height}"
+        puts "  - Weight: #{$current_pokemon.weight}"
         puts
       end  
     end
@@ -147,13 +145,14 @@ module Command
     def help
       puts
       puts "- Commands -" 
-      puts "go north - Goes north of your current location."
-      puts "go south - Goes south of your current location."
-      puts "walk - Walk in the tall grass to look for Pokemon. (does not work in towns)"
-      puts "menu - Opens a menu with additional options."
-      puts "where am i - Tells you where you are! (duh)"
-      puts "get pokeballs - Gets more pokeballs from Prof Oak! (only works in Pallet Town)"
-      puts "quit - Quits the game."
+      puts "Up Arrow - Goes north of your current location."
+      puts "Down Arrow - Goes south of your current location."
+      puts "w - Walk in the tall grass to look for Pokemon. (does not work in towns)"
+      puts "Esc - Opens a menu with additional options."
+      puts "Tab - Tells you where you are!"
+      puts "g - Gets more pokeballs from Prof Oak! (only works in Pallet Town)"
+      puts "h - Shows a list of commands"
+      puts "Q - Quits the game."
       puts
     end  
 
