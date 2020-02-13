@@ -11,6 +11,7 @@ if Place.count > 0 && Viewer.prompt.yes?("#{Place.count} place(s) already exist 
     use_previous_data = true
     if Viewer.prompt.yes?("Would you like to reselect preferences?")
         Tag.wipe_relevance
+        Keyword.destroy_all
         data_was_cleared = true
     end
 else
@@ -47,12 +48,21 @@ end
 ###################### 3rd screeen, ask for keywords
 Viewer.header
 
-if Viewer.prompt.yes?("Do you want also add some keywords?")
-    exit_condition = false 
+if Viewer.prompt.yes?("Would you like to add keywords to help with your search?")
+    Keyword.destroy_all
+    exit_condition = false
+    key_exists = false
     while !exit_condition
+        chosen_keywords = Keyword.all.map {|keyword| keyword.keyword}
         Viewer.header
+        # puts "Keyword already exists!" if key_exists
+        key_exists ? (puts "Keyword already exists!") : (puts "\n")
+        puts "Keywords: #{chosen_keywords.join(", ")}\n\n"
         key = Viewer.prompt.ask("Type a keyword or press Enter to finish")
-        if key
+        if chosen_keywords.include?(key)
+            key_exists = true
+        elsif key
+            key_exists = false
             imp = 0
             imp = Viewer.prompt.slider("Set the importance of the keyword #{key} (set to 0 if typed incorrectly)",  min: -100, max: 100, step: 5)
             if imp != 0
@@ -64,6 +74,8 @@ if Viewer.prompt.yes?("Do you want also add some keywords?")
     end
 end
 
+# Page.iterate_all_concurrently
+Viewer.header
 Page.iterate_all
 
 ###################### 4th screeen, print results
