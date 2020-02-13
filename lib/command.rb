@@ -102,15 +102,20 @@ module Command
 
     def release_pokemon
       list_pokemon
+      puts "Enter 'back' to go back".light_black
       ans = @@prompt.ask("Which Pokemon would you like to release?")
-      if found_pokemon = trainer.pokemons.find {|p| p.name == ans}
-        found_pokemon.delete
-        puts "You released your #{ans}...".colorize(:blue)
-        trainer.save
-        trainer.reload
-      else 
-        puts "You do not have a #{ans}!".colorize(:red)
-      end
+      if ans == "back"
+        return
+      else  
+        if found_pokemon = trainer.pokemons.find {|p| p.name == ans}
+          found_pokemon.delete
+          puts "You released your #{ans}...".colorize(:blue)
+          trainer.save
+          trainer.reload
+        else 
+          puts "You do not have a #{ans}!".colorize(:red)
+        end
+      end  
     end
 
     def list_pokemon
@@ -159,7 +164,7 @@ module Command
       choice = @@prompt.select("", "Pokemon".colorize(:yellow), 
                                "Release Pokemon".colorize(:red), 
                                "Items".colorize(:green), 
-                               "Quit".colorize(:red))
+                               "Close Menu".colorize(:red))
       puts
 
       case choice
@@ -169,8 +174,8 @@ module Command
         release_pokemon
       when "Items".colorize(:green)
         puts "Pokeballs: #{trainer.pokeball}"  
-      when "Quit".colorize(:red)
-        Main.exit_game
+      when "Close Menu".colorize(:red)
+        return
       end
 
       puts
