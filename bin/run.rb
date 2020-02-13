@@ -60,7 +60,8 @@ def search_location(user)
 end
 
 def delete_function(user)
-    if user.restaurants.empty?
+    user = User.find(user.id)
+    if user.lists.empty?
         puts "You don't have any restaurant inside your list to delete.".red
         user.print_out_list
         option(user)
@@ -87,6 +88,7 @@ def delete_function(user)
 end
 
 def clear_all_restaurant_by_location(user)
+  
     puts "Select city you want to delete from list"
     list = user.restaurants.pluck(:city).uniq
     input = @prompt.select("*".blue,list)
@@ -94,7 +96,7 @@ def clear_all_restaurant_by_location(user)
 end
 
 def clear_restaurant_by_id(user)
-    user = User.find(user.id)
+    
     puts "Please input your restaurant id you want to remove from the list."
     id = gets.chomp.to_i
     if user.restaurants.map{|restaurant| restaurant.id}.include?(id)

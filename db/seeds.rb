@@ -2,8 +2,6 @@
 # User.destroy_all
 # List.destroy_all
 
-
-
 # Restaurant.create(restaurant_name: "Olive Garden", location: "Houston", type_of_food: "Italian")
 # Restaurant.create(restaurant_name: "Indigo", location: "Houston", type_of_food: "Italian")
 # Restaurant.create(restaurant_name: "La Lucha", location: "Houston", type_of_food: "Mexican")
@@ -20,8 +18,7 @@
 # dallas_url = "https://developers.zomato.com/api/v2.1/search?entity_id=276&entity_type=city"
 # lubbock_url = "https://developers.zomato.com/api/v2.1/search?entity_id=1189&entity_type=city"
 
-
-#  response = RestClient.get(lubbock_url, headers={'user-key': "a9252d17baa2869cc9fb47f0db114837"})
+#  response = RestClient.get(lubbock_url  , headers={'user-key': "a9252d17baa2869cc9fb47f0db114837"})
 #  restaurant = JSON.parse(response)
 #  restaurant["restaurants"].each do |restaurant|
 #     name = restaurant["restaurant"]["name"]
