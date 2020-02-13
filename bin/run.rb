@@ -1,10 +1,11 @@
 require_relative '../config/environment'
 # require_all
+##
 @prompt = TTY::Prompt.new
+@a = Artii::Base.new
 
 def welcome
-    a = Artii::Base.new
-    puts a.asciify("Welcome to Restaurant Finder").red
+    puts @a.asciify("Welcome to Restaurant Finder").green
     puts "Please enter your name"
     name = gets.chomp.split(" ").collect{|name| name.capitalize}.join(" ")
     while name == ""
@@ -116,6 +117,7 @@ def option(user)
     list = ["View your restaurant lists",
             "Delete restaurant in your lists",
             "Search restaurant location",
+            "Welcome",
             "Exit"
         ]
     input = @prompt.select("*".green,list)
@@ -128,7 +130,9 @@ def option(user)
     when list[2]
         search_location(user)
     when list[3]
-        puts "Thanks for using our service."
+        welcome
+    when list[4]
+        puts @a.asciify("Thanks for using our service !").green
     end
 end
 
