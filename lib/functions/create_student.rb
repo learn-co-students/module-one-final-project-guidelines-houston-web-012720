@@ -3,8 +3,18 @@ require 'pry'
 def create_student
     first_name = $prompt.ask("What is your first name?")
     last_name = $prompt.ask("What is your last name?")
+    puts "Hi #{first_name} #{last_name}"
+    temp_stud = Student.where(first_name: first_name, last_name: last_name)
+    if temp_stud
+        puts "You may have an account already"
+        if $prompt.select("Are any of these your username? Select 'false' if not.", temp_stud.map{|stud| stud.username}.push(false))
+            return puts "Welcome back! Please go back and select 'Login'"
+        else 
+            puts "Okay, let's finish creating your account."
+        end
+    end
     age = $prompt.ask("How old are you?")
-    gender = $prompt.ask("What is your gender?")
+    gender = $prompt.select("What is your gender?", ["Male", "Female"])
     def username_is_unique(username)
         if Student.find_by(username: username)
             puts "Sorry, username '#{username}' is already taken, please try another."
@@ -26,5 +36,6 @@ def create_student
     Student.create(username: username, password: password, first_name: first_name, last_name: last_name, age: age, gender: gender)
 
     $current_student_id = Student.last.id
-    puts $current_student_id
+    # puts $current_student_id
 end
+# create_student
