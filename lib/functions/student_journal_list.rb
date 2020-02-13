@@ -1,8 +1,8 @@
-require 'pry'
+# require 'pry'
 require_relative 'global'
-require_relative 'journal_entry'
+# require_relative 'journal_entry'
 def student_journal_list
-    $current_student_id = 1
+    # $current_student_id = 1
 
     # binding.pry
 
