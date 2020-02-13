@@ -1,7 +1,6 @@
 require_relative '../config/environment'
 require 'open-uri'
 
-
 ###################### Initial screen, select category
 Viewer.header
 options = ["Eat and Drink","Going Out-Entertainment","Sights and Museums","Natural and Geographical","Transport","Accommodations","Leisure and Outdoor","Shopping","Business and Services","Facilities","Areas and Buildings"]
@@ -20,7 +19,6 @@ else
     puts "You've chosen #{category}, great!"
     Viewer.header
     APIScrapper.get_data(category)
-    
 end
 
 
