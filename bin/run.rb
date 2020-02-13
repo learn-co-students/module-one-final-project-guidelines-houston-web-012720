@@ -7,6 +7,11 @@ def welcome
     puts a.asciify("Welcome to Restaurant Finder").red
     puts "Please enter your name"
     name = gets.chomp.split(" ").collect{|name| name.capitalize}.join(" ")
+    while name == ""
+        puts "You have enter nothing".red + ", please enter your name"
+        name = gets.chomp.split(" ").collect{|name| name.capitalize}.join(" ")
+    end
+
     User.all.map{|user| user.user_name}.include?(name) ? user = User.find_by(user_name: name) : user = User.create(user_name: name)
     puts "Select option"
     option(user)
