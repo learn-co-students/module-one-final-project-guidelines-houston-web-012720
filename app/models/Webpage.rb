@@ -31,26 +31,30 @@ class Webpage < ActiveRecord::Base
             end
             link
         }.uniq
-
+     
         links = links.select{ |link|       
         begin
-            self.is_internal_link?(link) && !Webpage.exists?(page: link)
+            self.is_internal_link?(link) && !Webpage.exists?(page: link) && Webpage.where(domain: self.domain).count < 30
         rescue
             false
         end
         }
 
         links.each {|link|
-            Page.create(domain: self.domain, page: link)
+            Webpage.create(domain: self.domain, page: link)
         }
-        self.update(visited: true,  content: rawtex)
+        begin
+            self.update(visited: true,  content: rawtext)
+        rescue
+            self.update(visited: true)
+        end
  
     end
 
     def is_internal_link?(link)
         exceptions = ["www.facebook.com", "www.google.com"]
         link_host = URI.parse(link).host
-        website_host = URI.parse(self.website).host
+        website_host = URI.parse(self.domain).host
         link_host.prepend("www.") unless link_host.starts_with?("www.")
         website_host.prepend("www.") unless website_host.starts_with?("www.")
         website_host == link_host && !exceptions.include?(link_host)
