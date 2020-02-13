@@ -18,12 +18,6 @@ class User < ActiveRecord::Base
         puts table
     end
 
-
-    def delete_all_restaurants_in_city(city_name)
-        restaurants.where(city: city_name).destroy_all
-        print_out_list
-    end
-
     def delete_from_lists(id)
         restaurants.destroy(id)
         print_out_list
@@ -34,6 +28,7 @@ class User < ActiveRecord::Base
     end
     def delete_all_restaurant_by_location(restaurant_city)
         restaurants.where(city: restaurant_city).destroy_all
+        print_out_list
     end
 
 end
