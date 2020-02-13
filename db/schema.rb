@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_13_175647) do
+ActiveRecord::Schema.define(version: 2020_02_13_152206) do
 
   create_table "keywords", force: :cascade do |t|
     t.string "keyword"
@@ -46,13 +46,6 @@ ActiveRecord::Schema.define(version: 2020_02_13_175647) do
     t.string "title"
     t.string "group"
     t.integer "relevance"
-  end
-
-  create_table "webpages", force: :cascade do |t|
-    t.string "domain"
-    t.string "page"
-    t.text "content"
-    t.boolean "visited"
   end
 
 end

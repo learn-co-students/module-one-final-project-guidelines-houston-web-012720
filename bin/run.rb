@@ -16,10 +16,13 @@ if Place.count > 0 && Viewer.prompt.yes?("#{Place.count} place(s) already exist 
 else
     data_was_cleared = true
     category = Viewer.prompt.select("Hello, which category are you interested in?\n", options)
-    puts "You've chosen #{category}, great!"
+    distance = Viewer.prompt.ask("Great, you've select #{category}, how far should I look?")
+    units = Viewer.prompt.select("Meters or feet?\n", ["Of course meters, comerade, why you to ask me?", "Probably feet partner, we're in US, right?"])
+    units == "Probably feet partner, we're in US, right?" ? distance *= 0.3048 : distance
     Viewer.header
-    APIScrapper.get_data(category)
+    APIScrapper.get_data(category, distance )
     
+
 end
 
 
@@ -82,7 +85,7 @@ t = TTY::Table.new table
 
 #  box = TTY::Box.success(t)
 box = TTY::Box.frame t.render(:ascii, align: :center ), align: :center, title: {top_left: "Here are the top 10 results:", bottom_right: 'v1.0'}, style: {fg: :bright_yellow, bg: :blue, border: { fg: :bright_yellow, bg: :blue}}
-
+Viewer.header
 puts box
 
 

@@ -5,7 +5,7 @@ class APIScrapper
     @@api_key = "apiKey=WVM1t25xZdzUizVrVpRsGl4yhHrukBDoFPTMOmReltA"
     @@counter = 0
 
-    def self.get_data(what)
+    def self.get_data(what, distance)
 
         Tag.destroy_all
         Place.destroy_all
@@ -15,7 +15,7 @@ class APIScrapper
         Keyword.destroy_all
         remote_ip = open('http://whatismyip.akamai.com').read
         coordinates = Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
-        url = "#{@@base_url}at=#{coordinates.lat},#{coordinates.lng}&q=#{what}&#{@@api_key}"
+        url = "#{@@base_url}in=#{coordinates.lat},#{coordinates.lng};r=#{distance}&q=#{what}&#{@@api_key}"
         result = JSON.parse(open(url).read)["results"]
         APIScrapper.create_places(result) 
         while result.has_key?("next") do 
