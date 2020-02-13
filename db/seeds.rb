@@ -28,3 +28,26 @@
 #     timing = restaurant["restaurant"]["timings"]
 #     Restaurant.create(restaurant_name: name, city: city, address: address, type_of_food: cuisines, timing: timing)
 #  end
+
+
+#  response2 = RestClient.get(austin_url, headers={'user-key': "a9252d17baa2869cc9fb47f0db114837"})
+#  restaurant2 = JSON.parse(response2)
+#  restaurant2["restaurants"].each do |restaurant|
+#     name = restaurant["restaurant"]["name"]
+#     city = restaurant["restaurant"]["location"]["city"]
+#     address = restaurant["restaurant"]["location"]["address"]
+#     cuisines = restaurant["restaurant"]["cuisines"]
+#     timing = restaurant["restaurant"]["timings"]
+#     Restaurant.create(restaurant_name: name, city: city, address: address, type_of_food: cuisines, timing: timing)
+#  end
+
+#  response3 = RestClient.get(dallas_url, headers={'user-key': "a9252d17baa2869cc9fb47f0db114837"})
+#  restaurant3 = JSON.parse(response3)
+#  restaurant3["restaurants"].each do |restaurant|
+#     name = restaurant["restaurant"]["name"]
+#     city = restaurant["restaurant"]["location"]["city"]
+#     address = restaurant["restaurant"]["location"]["address"]
+#     cuisines = restaurant["restaurant"]["cuisines"]
+#     timing = restaurant["restaurant"]["timings"]
+#     Restaurant.create(restaurant_name: name, city: city, address: address, type_of_food: cuisines, timing: timing)
+#  end
