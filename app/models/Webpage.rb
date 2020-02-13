@@ -4,7 +4,7 @@ class Webpage < ActiveRecord::Base
             Webpage.find_or_create_by(domain: place.website, page: place.website)
             while Webpage.where(domain: place.website, visited: nil).count > 0 do
                 Webpage.where(domain: place.website, visited: nil).first.visit
-            end  
+            end
         }
     end
 
