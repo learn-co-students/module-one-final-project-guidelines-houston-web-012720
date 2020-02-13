@@ -28,9 +28,8 @@ class APIScrapper
     end
 
     def self.create_places(result)
-        threads = []
-        result["items"].each { |json_part|
-            threads << Thread.new(json_part) { |item|
+        result["items"].each { |item|
+                begin
                 place = JSON.parse(open(item["href"]).read)  
                 if place["contacts"].has_key?("website")
                     website = place["contacts"]["website"][0]["value"]
@@ -55,22 +54,19 @@ class APIScrapper
                         tags << Tag.find_or_create_by(title: category["title"],group: "categories")
                     }
                 end
-                begin 
                     this = Place.create(strangehash)
                     tags.each { |tag|
                         PlaceTagJoiner.create(place: this, tag: tag)
                     }
+                    Viewer.header
+                    puts "#{Place.count} places scraped from #{Tag.count} categories..."
                 rescue
                     retry
                 end
         
-            }
+            
         }
-        threads.each {|thr| 
-            thr.join 
-            Viewer.header
-            puts "#{Place.count} places scraped from #{Tag.count} categories..."
-        }
+
     end
 
 end
