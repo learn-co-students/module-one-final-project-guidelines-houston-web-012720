@@ -63,8 +63,9 @@ class Page < ActiveRecord::Base
     def self.iterate_all
         Page.delete_all
         Match.delete_all
+        places = Place.get_10_most_tag_relevant
         if Keyword.count > 0
-            Place.where.not(website: nil).each{ |place|
+            places.select{|place| place.website}.each{ |place|
                 page = Page.find_or_create_by(place_id: place.id, url: place.website)
                 while Page.where(place_id: place.id, visited: nil).count > 0 
                     Page.where(place_id: place.id, visited: nil).first.visit

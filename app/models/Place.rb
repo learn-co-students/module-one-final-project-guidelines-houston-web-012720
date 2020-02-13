@@ -11,6 +11,12 @@ class Place < ActiveRecord::Base
         self.tags.reduce(0) {|memo, tag| tag.relevance ? memo + tag.relevance : memo}
     end
 
+    def self.get_10_most_tag_relevant
+        Place.all.sort { |a,b|
+            b.tag_relevance <=> a.tag_relevance
+        }.first(10)
+    end
+
     def keyword_relevance
         self.matches.reduce(0) {|memo, match| memo + (match.keyword.relevance * match.count)}
     end
