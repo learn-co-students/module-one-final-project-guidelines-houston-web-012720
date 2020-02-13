@@ -31,6 +31,7 @@ class Main
   end
 
   def self.draw_title
+    pid = fork{ exec 'afplay', "res/Title_Screen.mp3" }
     puts @@artii.asciify("PokemonCli").colorize(:yellow) # Color font to blue and yellow
   end 
 
@@ -44,6 +45,7 @@ class Main
     when "Load Game"
       Main.load_game
     when "Exit"
+      pid = fork{ exec 'killall', "afplay" }
       Main.exit_game
     end  
 
@@ -63,7 +65,6 @@ class Main
     if user
       @@current_trainer = user
       puts "Welcome back #{@@current_trainer.name}!"
-      puts "Type 'help' for a list of usable commands.".light_black
     else
       puts "That is not a Trainer i've ever heard of!"
       sleep(2)
@@ -71,6 +72,9 @@ class Main
       Main.draw_title
       Main.draw_main_menu
     end  
+
+    pid = fork{ exec 'killall', "afplay" }
+
   end
 
   def self.exit_game
@@ -130,6 +134,7 @@ class Main
   end
 
   def self.pick_starter
+
     puts
     Main.slow_puts("Here, #{@@current_trainer.name}!" + 
                    " There are 3 " + "POKEMON".colorize(:yellow) + 
@@ -139,30 +144,46 @@ class Main
     Main.slow_puts("In my old age, I have only 3 left, but you can have one! Choose!"); Main.halt
     puts
 
-    choice = @@prompt.select("", "Squirtle".colorize(:blue), 
+    while true
+      choice = @@prompt.select("", "Squirtle".colorize(:blue), 
                              "Bulbasaur".colorize(:green), 
                              "Charmander".colorize(:red))
 
-    case choice
-    when "Squirtle".colorize(:blue)
-      puts
-      Main.slow_puts("So you want the water " + 
-                     "POKEMON".colorize(:yellow) + 
-                     ", " + "Squirtle".colorize(:green) + "?") 
-      Main.halt
-    when "Bulbasaur".colorize(:green)  
-      puts
-      Main.slow_puts("So you want the grass " + 
-                     "POKEMON".colorize(:yellow) + 
-                     ", " + "Bulbasaur".colorize(:green) + "?") 
-      Main.halt
-    when "Charmander".colorize(:red)
-      puts
-      Main.slow_puts("So you want the fire " + 
-                     "POKEMON".colorize(:yellow) + 
-                     ", " + "Charmander".colorize(:red) + "?") 
-      Main.halt
-    end 
+      case choice
+      when "Squirtle".colorize(:blue)
+        puts
+        if @@prompt.yes?("So you want the water " + 
+                         "POKEMON".colorize(:yellow) + 
+                         ", " + "Squirtle".colorize(:blue) + "?") 
+          break
+        else
+          Main.clear_term  
+        end
+
+      when "Bulbasaur".colorize(:green)  
+        puts
+        if @@prompt.yes?("So you want the grass " + 
+                         "POKEMON".colorize(:yellow) + 
+                         ", " + "Bulbasaur".colorize(:green) + "?") 
+          break
+        else
+          Main.clear_term
+        end
+
+      when "Charmander".colorize(:red)
+        puts
+        if @@prompt.yes?("So you want the fire " + 
+                         "POKEMON".colorize(:yellow) + 
+                         ", " + "Charmander".colorize(:red) + "?")
+          break  
+        else
+          Main.clear_term
+        end
+
+      end
+    end
+
+    @@current_trainer.pokemons.create(name: choice.uncolorize.downcase)
 
     Main.slow_puts("This POKEMON looks really energetic!"); Main.halt
     Main.slow_puts("You'll need POKE BALLS to catch POKEMON"); Main.halt
@@ -173,6 +194,8 @@ class Main
     puts "You recieved 10 POKE BALLS from PROF OAK!"
     puts
     sleep(1.5)
+
+    pid = fork{ exec 'killall', "afplay" }
 
     help
 

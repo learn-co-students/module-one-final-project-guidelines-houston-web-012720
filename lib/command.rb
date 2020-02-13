@@ -13,14 +13,14 @@ module Command
         battle_menu
       end
 
+      puts "Type 'help' for a list of commands.".light_black
+
       @@prompt.ask("#{trainer.name} ".yellow.bold + "$".cyan.bold)
     end
 
     def do_command(cmd)
 
         Main.clear_term
-
-        puts "Type 'help' for a list of commands."
 
         case cmd 
         when "go north"
@@ -45,7 +45,7 @@ module Command
             release_pokemon    
         else
           puts "That is not a valid command!".colorize(:red)
-          puts "Type 'help' for a list of commands."
+          puts "Type 'help' for a list of commands.".light_black
         end
 
     end
