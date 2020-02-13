@@ -167,6 +167,7 @@ module Command
       puts "g - Gets more pokeballs from Prof Oak! (only works in Pallet Town)"
       puts "h - Shows a list of commands"
       puts "Q - Quits the game."
+      puts 
       puts
     end  
 
