@@ -102,14 +102,19 @@ module Command
 
     def release_pokemon
       list_pokemon
+      puts "Enter 'back' to go back"
       ans = @@prompt.ask("Which Pokemon would you like to release?")
-      if found_pokemon = trainer.pokemons.find {|p| p.name == ans}
-        found_pokemon.delete
-        puts "You released your #{ans}...".colorize(:blue)
-        trainer.save
-        trainer.reload
-      else 
-        puts "You do not have a #{ans}!".colorize(:red)
+      if ans == "back"
+        return 
+      else
+        if found_pokemon = trainer.pokemons.find {|p| p.name == ans}
+          found_pokemon.delete
+          puts "You released your #{ans}...".colorize(:blue)
+          trainer.save
+          trainer.reload
+        else 
+          puts "You do not have a #{ans}!".colorize(:red)
+        end
       end
     end
 
@@ -162,6 +167,7 @@ module Command
       puts "g - Gets more pokeballs from Prof Oak! (only works in Pallet Town)"
       puts "h - Shows a list of commands"
       puts "Q - Quits the game."
+      puts 
       puts
     end  
 
@@ -171,7 +177,7 @@ module Command
       choice = @@prompt.select("", "Pokemon".colorize(:yellow), 
                                "Release Pokemon".colorize(:red), 
                                "Items".colorize(:green), 
-                               "Quit".colorize(:red))
+                               "Close Menu".colorize(:red))
       puts
 
       case choice
@@ -181,8 +187,9 @@ module Command
         release_pokemon
       when "Items".colorize(:green)
         puts "Pokeballs: #{trainer.pokeball}"  
-      when "Quit".colorize(:red)
-        Main.exit_game
+      when "Close mENU".colorize(:red)
+        return 
+      
       end
 
       puts
