@@ -31,6 +31,7 @@ class Main
   end
 
   def self.draw_title
+    pid = fork{ exec 'afplay', "res/Title_Screen.mp3" }
     puts @@artii.asciify("PokemonCli").colorize(:yellow) # Color font to blue and yellow
   end 
 
@@ -44,6 +45,7 @@ class Main
     when "Load Game"
       Main.load_game
     when "Exit"
+      pid = fork{ exec 'killall', "afplay" }
       Main.exit_game
     end  
 
@@ -71,6 +73,9 @@ class Main
       Main.draw_title
       Main.draw_main_menu
     end  
+
+    pid = fork{ exec 'killall', "afplay" }
+
   end
 
   def self.exit_game
@@ -130,6 +135,7 @@ class Main
   end
 
   def self.pick_starter
+
     puts
     Main.slow_puts("Here, #{@@current_trainer.name}!" + 
                    " There are 3 " + "POKEMON".colorize(:yellow) + 
@@ -148,7 +154,7 @@ class Main
       puts
       Main.slow_puts("So you want the water " + 
                      "POKEMON".colorize(:yellow) + 
-                     ", " + "Squirtle".colorize(:green) + "?") 
+                     ", " + "Squirtle".colorize(:blue) + "?") 
       Main.halt
     when "Bulbasaur".colorize(:green)  
       puts
@@ -173,6 +179,8 @@ class Main
     puts "You recieved 10 POKE BALLS from PROF OAK!"
     puts
     sleep(1.5)
+
+    pid = fork{ exec 'killall', "afplay" }
 
     help
 
