@@ -88,6 +88,7 @@ module Encounter
         caught_pokeball
       else
         puts "You failed to catch the #{$current_pokemon.name}.."
+        sleep(2)
         if chance_to_flee > 7
           pokemon_flee
         end  
@@ -119,6 +120,7 @@ module Encounter
 
     def pokemon_flee
       puts "The wild #{$current_pokemon.name} has fled."
+      sleep(2)
       $current_pokemon = nil
       $in_battle = false
     end
