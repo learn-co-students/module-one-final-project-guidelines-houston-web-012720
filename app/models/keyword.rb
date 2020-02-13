@@ -1,3 +1,4 @@
 class Keyword < ActiveRecord::Base
-    belongs_to :match
+    has_many :matches
+    has_many :pages, through: :matches
 end

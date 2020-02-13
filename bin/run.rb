@@ -34,7 +34,7 @@ while Tag.with_relevance.count < 5 do
     if tag == "DONE SELECTING TAGS"
         break
     end
-    rel =  Viewer.prompt.slider('How relevant is this tag?\n',  min: -100, max: 100, step: 5)
+    rel =  Viewer.prompt.slider("How relevant is this tag?\n",  min: -100, max: 100, step: 5)
     unless rel == 0
         tags -= [tag]
         Tag.find_by(title: tag).update(relevance: rel)
@@ -55,7 +55,7 @@ if Viewer.prompt.yes?("Do you want also add some keywords?")
             imp = 0
             imp = Viewer.prompt.slider("Set the importance of the keyword #{key} (set to 0 if typed incorrectly)",  min: -100, max: 100, step: 5)
             if imp != 0
-                Keyword.create(keyword: key, importance: imp)
+                Keyword.create(keyword: key, relevance: imp)
             end
         else
             exit_condition = true
