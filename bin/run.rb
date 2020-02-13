@@ -24,14 +24,14 @@ end
 def get_restaurant_object(restaurant_name,user)
     restaurant = Restaurant.find_by(restaurant_name: restaurant_name)
     puts "|------------------------------------------------------------------------------------------------|"
-    puts "|                   #{restaurant.restaurant_name}"
+    puts "|"+"                   #{restaurant.restaurant_name}".green
     puts "|\n"
     puts "|       Location:"
-    puts "|             #{restaurant.address}"
+    puts "|"+"             #{restaurant.address}".green
     puts "|       Cuisienes:"
-    puts "|             #{restaurant.type_of_food}"
+    puts "|"+"             #{restaurant.type_of_food}".green
     puts "|       Timings:"
-    puts "|             #{restaurant.timing}"
+    puts "|"+"             #{restaurant.timing}".green
     puts "|\n"
     puts "|-------------------------------------------------------------------------------------------------|"
     answer = @prompt.yes?("Would you like to add this restaurant into your list?")
