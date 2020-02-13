@@ -2,7 +2,11 @@
 class APIScrapper
 
     @@base_url = "https://places.ls.hereapi.com/places/v1/discover/search?"
+    @@geocode_url = "https://geocoder.ls.hereapi.com/6.2/geocode.json?"
     @@api_key = "apiKey=WVM1t25xZdzUizVrVpRsGl4yhHrukBDoFPTMOmReltA"
+    @@coordinates = {}
+    @@address = ""
+
     @@counter = 0
 
     def self.get_data(what, distance)
@@ -13,9 +17,11 @@ class APIScrapper
         Page.destroy_all
         Match.destroy_all
         Keyword.destroy_all
-        remote_ip = open('http://whatismyip.akamai.com').read
-        coordinates = Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
-        url = "#{@@base_url}in=#{coordinates.lat},#{coordinates.lng};r=#{distance}&q=#{what}&#{@@api_key}"
+        if @@coordinates = {}
+            remote_ip = open('http://whatismyip.akamai.com').read
+            @@coordinates = Geokit::Geocoders::MultiGeocoder.geocode(remote_ip)
+        end
+        url = "#{@@base_url}in=#{@@coordinates.lat},#{@@coordinates.lng};r=#{distance}&q=#{what}&#{@@api_key}"
         result = JSON.parse(open(url).read)["results"]
         APIScrapper.create_places(result) 
         while result.has_key?("next") do 
@@ -67,6 +73,31 @@ class APIScrapper
             
         }
 
+    end
+
+    def self.geocode (address)
+        address = address.split(" ").join("+")
+        url = "#{@@geocode_url}#{@@api_key}&searchtext=#{address}"
+        result = JSON.parse(RestClient.get(url))["Response"]["View"][0]["Result"]
+        
+        #"https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=WVM1t25xZdzUizVrVpRsGl4yhHrukBDoFPTMOmReltA&searchtext=708+Main+Houston"
+        if result.length > 1 
+            adr_list = result.map { |hash|
+                hash["Location"]["Address"]["Label"]
+            }
+            Viewer.header
+            address = Viewer.prompt.select("There are many options, please select one\n", adr_list)
+            result = result.find{ |hash|
+                hash["Location"]["Address"]["Label"] == address
+                @@address = address
+            }
+        else
+            result = result[0]
+            @@address =  result[0]["Location"]["Address"]["Label"]
+        end
+        @@coordinates = {lat: result["Location"]["DisplayPosition"]["Latitude"], lon: result["Location"]["DisplayPosition"]["Longitude"]}
+        
+        # "#{result["Location"]["DisplayPosition"]["Latitude"]},#{result["Location"]["DisplayPosition"]["Longitude"]}"
     end
 
 end

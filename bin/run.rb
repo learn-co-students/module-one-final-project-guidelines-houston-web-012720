@@ -17,11 +17,14 @@ if Place.count > 0 && Viewer.prompt.yes?("#{Place.count} place(s) already exist 
 else
     data_was_cleared = true
     category = Viewer.prompt.select("Hello, which category are you interested in?\n", options)
+    if Viewer.prompt.yes?("Would you like to type an address?")
+       APIScrapper.geocode(Viewer.prompt.ask("Please type at least a street and city"))
+    end
     distance = Viewer.prompt.ask("Great, you've select #{category}, how far should I look?")
     units = Viewer.prompt.select("Meters or feet?\n", ["Of course meters, comerade, why you to ask me?", "Probably feet partner, we're in US, right?"])
     units == "Probably feet partner, we're in US, right?" ? distance *= 0.3048 : distance
     Viewer.header
-    APIScrapper.get_data(category, distance )
+    APIScrapper.get_data(category, distance)
     
 
 end
