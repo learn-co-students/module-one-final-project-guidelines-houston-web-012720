@@ -4,11 +4,12 @@ class Page < ActiveRecord::Base
     has_many :keywords, through: :matches
 
     def visit
-        puts "checking #{self.url}"
+        Viewer.header
+        puts "Checking #{self.url} ..."
         begin
             rawtext = RestClient.get(self.url)
         rescue
-            puts "#{self.url} doesn't respond"
+            puts "#{self.url} didn't respond."
             self.update(visited: true)
             return nil
         end
@@ -24,14 +25,23 @@ class Page < ActiveRecord::Base
         links = URI::extract(rawtext, "https").uniq
         links = links.map{|link| 
             link = link.to_s
-            if link.to_s.include?("#")
-                link = link.slice(0,link.rindex("#"))
-            end
-            if link.to_s.include?("wp-content")
-                link = link.slice(0,link.rindex("wp-content"))
+            if link.length < 10
+                link = "www.google.com"
+            else
+                if link.to_s.include?("#")
+                    link = link.slice(0,link.index("#"))
+                end
+                if link.to_s.include?("wp-")
+                    link = link.slice(0,link.index("wp-"))
                 
+                end
+                if link.to_s.slice(7,link.length).include?("//")
+                    link = link.slice(0,link.slice(7,link.length).index("//")+7)
+                
+                end
             end
             link
+        
         }.uniq
 
         links = links.select{ |link|       
@@ -41,7 +51,7 @@ class Page < ActiveRecord::Base
             false
         end
         }
-
+        
         links.each {|link|
             this_url = Page.find_by(url: link)
             if this_url
@@ -69,33 +79,10 @@ class Page < ActiveRecord::Base
                 page = Page.find_or_create_by(place_id: place.id, url: place.website)
                 while Page.where(place_id: place.id, visited: nil).count > 0 
                     Page.where(place_id: place.id, visited: nil).first.visit
-                    # binding.pry
                 end
             }
         end
     end
 
-
-    def self.iterate_all_concurrently
-        Page.delete_all
-        Match.delete_all
-        threads = []
-        if Keyword.count > 0
-            Place.where.not(website: nil).each{ |unvisited_place|
-                until threads.map { |t| t.status }.count("run") < 1 do sleep 5 end
-                threads << Thread.new(unvisited_place) { |place|
-                    page = Page.find_or_create_by(place_id: place.id, url: place.website)
-                    while Page.where(place_id: place.id, visited: nil).count > 0
-                        begin 
-                            Page.where(place_id: place.id, visited: nil).first.visit
-                        rescue
-                            retry
-                        end
-                    end
-                }
-            }
-            threads.each {|thr|thr.join}
-        end
-    end
 end
 
