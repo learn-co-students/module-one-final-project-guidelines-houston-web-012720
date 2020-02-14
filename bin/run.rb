@@ -65,8 +65,7 @@ def search_location(user)
 end
 
 def delete_function(user)
-    user = User.find(user.id)
-    if user.lists.empty?
+    if user.restaurants.empty?
         puts "You don't have any restaurant inside your list to delete.".red
         user.print_out_list
         option(user)
@@ -114,6 +113,7 @@ def clear_restaurant_by_id(user)
 end
 
 def option(user)
+    user = User.find(user.id)
     list = ["View your restaurant lists",
             "Delete restaurant in your lists",
             "Search restaurant location",
