@@ -3,6 +3,7 @@ require_relative '../config/environment'
 @prompt = TTY::Prompt.new
 @a = Artii::Base.new
 
+
 def welcome
     puts @a.asciify("Welcome to Restaurant Finder").green
     puts "Please enter your name"
@@ -25,14 +26,14 @@ def get_restaurant_object(restaurant_name,user)
     restaurant = Restaurant.find_by(restaurant_name: restaurant_name)
     puts "|------------------------------------------------------------------------------------------------|"
     puts "|"+"                   #{restaurant.restaurant_name}".green
-    puts "|\n"
+    puts "|"
     puts "|       Location:"
     puts "|"+"             #{restaurant.address}".green
     puts "|       Cuisienes:"
     puts "|"+"             #{restaurant.type_of_food}".green
     puts "|       Timings:"
     puts "|"+"             #{restaurant.timing}".green
-    puts "|\n"
+    puts "|"
     puts "|-------------------------------------------------------------------------------------------------|"
     answer = @prompt.yes?("Would you like to add this restaurant into your list?")
     # user = User.find(user.id)
@@ -92,7 +93,6 @@ def delete_function(user)
 end
 
 def clear_all_restaurant_by_location(user)
-  
     puts "Select city you want to delete from list"
     list = user.restaurants.pluck(:city).uniq
     input = @prompt.select("*".blue,list)
@@ -126,10 +126,15 @@ def option(user)
         user.print_out_list
         option(user)
     when list[1]
+        system "clear"
+        puts @a.asciify("Welcome to Restaurant Finder").green
         delete_function(user)
     when list[2]
+        system "clear"
+        puts @a.asciify("Welcome to Restaurant Finder").green
         search_location(user)
     when list[3]
+        system "clear"
         welcome
     when list[4]
         puts @a.asciify("Thanks for using our service !").green
