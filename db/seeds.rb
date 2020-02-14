@@ -356,3 +356,74 @@ fc = Area.find_or_create_by(name: "Fuchsia City",
                              west_area_id: 33, 
                              pokemon_list: nil,
                              water_list: fc_water_pokemon)
+#### ROUTE 13 ################ ID:35
+r13 = Area.find_or_create_by(name: "Route 13", 
+                             north_area_id: nil, 
+                             south_area_id: nil, 
+                             east_area_id: 36, 
+                             west_area_id: 34, 
+                             pokemon_list: nil,
+                             water_list: nil) 
+
+#### ROUTE 14 ################# ID:36
+r14 = Area.find_or_create_by(name: "Route 14", 
+                             north_area_id: nil, 
+                             south_area_id: nil, 
+                             east_area_id: 37, 
+                             west_area_id: 35, 
+                             pokemon_list: nil,
+                             water_list: nil)
+
+##### ROUTE 15 ################### ID:37
+r15 = Area.find_or_create_by(name: "Route 15", 
+                             north_area_id: 24, 
+                             south_area_id: nil, 
+                             east_area_id: nil, 
+                             west_area_id: 36, 
+                             pokemon_list: nil,
+                             water_list: nil)
+
+#### SEA ROUTE 19 ############## ID:38
+r19 = Area.find_or_create_by(name: "sea Route 19", 
+                             north_area_id: 34, 
+                             south_area_id: nil, 
+                             east_area_id: nil, 
+                             west_area_id: 39, 
+                             pokemon_list: nil,
+                             water_list: nil)
+
+##### SEA FOAM ISLANDS ############# ID:39
+fi = Area.find_or_create_by(name: "sEA Foam Island", 
+                             north_area_id: nil, 
+                             south_area_id: nil, 
+                             east_area_id: 38, 
+                             west_area_id: 40, 
+                             pokemon_list: nil,
+                             water_list: nil)
+
+#### SEA ROUTE 20 ########### ID:40
+r20 = Area.find_or_create_by(name: "Sea Route 20", 
+                             north_area_id: nil, 
+                             south_area_id: nil, 
+                             east_area_id: 39, 
+                             west_area_id: 41, 
+                             pokemon_list: nil,
+                             water_list: nil)
+
+#### CINNABAR ISLAND ############ ID:41
+ci = Area.find_or_create_by(name: "Cinnabar Island", 
+                             north_area_id: 42, 
+                             south_area_id: nill, 
+                             east_area_id: 40, 
+                             west_area_id: nil, 
+                             pokemon_list: nil,
+                             water_list: nil)
+
+##### SEA ROUTE 21 ############# ID:42
+r21 = Area.find_or_create_by(name: "Sea Route 21", 
+                             north_area_id: 1, 
+                             south_area_id: 41, 
+                             east_area_id: nil, 
+                             west_area_id: nil, 
+                             pokemon_list: nil,
+                             water_list: nil)

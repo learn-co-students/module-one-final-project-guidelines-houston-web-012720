@@ -102,11 +102,25 @@ module Command
 
     def release_pokemon
       list_pokemon
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+      puts "Enter 'back' to go back"
+      ans = @@prompt.ask("Which Pokemon would you like to release?")
+      if ans == "back"
+        return 
+      else
+=======
+>>>>>>> project
       puts "Enter 'back' to go back".light_black
       ans = @@prompt.ask("Which Pokemon would you like to release?")
       if ans == "back"
         return
       else  
+<<<<<<< HEAD
+=======
+>>>>>>> df4dcec9233ae316def09e576079969bae68dc9d
+>>>>>>> project
         if found_pokemon = trainer.pokemons.find {|p| p.name == ans}
           found_pokemon.delete
           puts "You released your #{ans}...".colorize(:blue)
@@ -115,7 +129,15 @@ module Command
         else 
           puts "You do not have a #{ans}!".colorize(:red)
         end
+<<<<<<< HEAD
       end  
+=======
+<<<<<<< HEAD
+      end
+=======
+      end  
+>>>>>>> df4dcec9233ae316def09e576079969bae68dc9d
+>>>>>>> project
     end
 
     def list_pokemon
