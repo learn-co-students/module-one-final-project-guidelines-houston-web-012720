@@ -65,7 +65,7 @@ class APIScrapper
                         PlaceTagJoiner.create(place: this, tag: tag)
                     }
                     Viewer.header
-                    puts "#{Place.count} places scraped from #{Tag.count} categories..."
+                    puts "#{Place.count} places scraped with #{Tag.count} categories..."
                 rescue
                     retry
                 end

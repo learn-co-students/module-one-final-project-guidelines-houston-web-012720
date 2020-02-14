@@ -5,11 +5,11 @@ class Page < ActiveRecord::Base
 
     def visit
         Viewer.header
-        puts "checking #{self.url}"
+        puts "Checking #{self.url} ..."
         begin
             rawtext = RestClient.get(self.url)
         rescue
-            puts "#{self.url} doesn't respond"
+            puts "#{self.url} didn't respond."
             self.update(visited: true)
             return nil
         end

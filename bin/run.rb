@@ -1,9 +1,11 @@
 require_relative '../config/environment'
+require 'pry'
 require 'open-uri'
-
+require 'tty-spinner'
 
 ###################### Initial screen, select category
 Viewer.header
+$search_radius = 5000.0
 options = ["Eat and Drink","Going Out-Entertainment","Sights and Museums","Natural and Geographical","Transport","Accommodations","Leisure and Outdoor","Shopping","Business and Services","Facilities","Areas and Buildings"]
 use_previous_data = false
 data_was_cleared = false
@@ -20,12 +22,11 @@ else
     if Viewer.prompt.yes?("Would you like to type an address?")
        APIScrapper.geocode(Viewer.prompt.ask("Please type at least a street and city"))
     end
-    distance = Viewer.prompt.ask("Great, you've select #{category}, how far should I look?")
+    $search_radius = Viewer.prompt.ask("Great, you've select #{category}, how far should I look?").to_f
     units = Viewer.prompt.select("Meters or feet?\n", ["Of course meters, comerade, why you to ask me?", "Probably feet partner, we're in US, right?"])
-    units == "Probably feet partner, we're in US, right?" ? distance *= 0.3048 : distance
+    units == "Probably feet partner, we're in US, right?" ? $search_radius *= 0.3048 : $search_radius
     Viewer.header
-    APIScrapper.get_data(category, distance)
-    
+    APIScrapper.get_data(category, $search_radius)
 
 end
 
@@ -53,9 +54,11 @@ end
 
 ###################### 3rd screeen, ask for keywords
 Viewer.header
+no_new_keywords = false
 
 if Viewer.prompt.yes?("Would you like to add keywords to help with your search?")
     Keyword.destroy_all
+    Match.destroy_all
     exit_condition = false
     key_exists = false
     while !exit_condition
@@ -78,11 +81,15 @@ if Viewer.prompt.yes?("Would you like to add keywords to help with your search?"
             exit_condition = true
         end
     end
+else
+    no_new_keywords = true
 end
 
+unless !data_was_cleared && no_new_keywords
 # Page.iterate_all_concurrently
 Viewer.header
 Page.iterate_all
+end
 
 ###################### 4th screeen, print results
 
@@ -101,6 +108,8 @@ t = TTY::Table.new table
 #  box = TTY::Box.success(t)
 box = TTY::Box.frame t.render(:ascii, align: :center ), align: :center, title: {top_left: "Here are the top 10 results:", bottom_right: 'v1.0'}, style: {fg: :bright_yellow, bg: :blue, border: { fg: :bright_yellow, bg: :blue}}
 Viewer.header
+
+puts $search_radius
 puts box
 
 
