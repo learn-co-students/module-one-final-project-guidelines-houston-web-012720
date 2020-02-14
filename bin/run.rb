@@ -36,7 +36,7 @@ def get_restaurant_object(restaurant_name,user)
     puts "|\n"
     puts "|-------------------------------------------------------------------------------------------------|"
     answer = @prompt.yes?("Would you like to add this restaurant into your list?")
-    user = User.find(user.id)
+    # user = User.find(user.id)
     if answer
         if user.restaurants.map{|restaurant| restaurant.restaurant_name}.include?(restaurant.restaurant_name)
             puts "You have that restaurant already in your list".red
@@ -66,8 +66,7 @@ def search_location(user)
 end
 
 def delete_function(user)
-    user = User.find(user.id)
-    if user.lists.empty?
+    if user.restaurants.empty?
         puts "You don't have any restaurant inside your list to delete.".red
         user.print_out_list
         option(user)
@@ -114,6 +113,7 @@ def clear_restaurant_by_id(user)
 end
 
 def option(user)
+    user = User.find(user.id)
     list = ["View your restaurant lists",
             "Delete restaurant in your lists",
             "Search restaurant location",
