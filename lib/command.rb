@@ -131,8 +131,10 @@ module Command
     end
 
     def where_am_i
+      north_area = Area.all.find(id: trainer.area.north_area_id)
       place = trainer.area.name
       puts "You are in #{place}."
+      puts "To the north is #{}"
     end
 
     def in_battle_check
