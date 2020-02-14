@@ -54,7 +54,7 @@ r21_pokemon_list = "100, 115, 114, 76, 88, 89, 87, 147, 148, 149"
 ##### PALLET TOWN ###############
 pt = Area.find_or_create_by(name: "Pallet Town", 
                             north_area_id: 2,
-                            south_area_id: nil, 
+                            south_area_id: 42, 
                             east_area_id: nil, 
                             west_area_id: nil, 
                             pokemon_list: nil,
@@ -414,7 +414,7 @@ r20 = Area.find_or_create_by(name: "Sea Route 20",
 #### CINNABAR ISLAND ############ ID:41
 ci = Area.find_or_create_by(name: "Cinnabar Island", 
                              north_area_id: 42, 
-                             south_area_id: nill, 
+                             south_area_id: nil, 
                              east_area_id: 40, 
                              west_area_id: nil, 
                              pokemon_list: nil,

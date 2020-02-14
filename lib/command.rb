@@ -102,25 +102,14 @@ module Command
 
     def release_pokemon
       list_pokemon
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-      puts "Enter 'back' to go back"
-      ans = @@prompt.ask("Which Pokemon would you like to release?")
-      if ans == "back"
-        return 
-      else
-=======
->>>>>>> project
+
       puts "Enter 'back' to go back".light_black
+
       ans = @@prompt.ask("Which Pokemon would you like to release?")
+
       if ans == "back"
         return
       else  
-<<<<<<< HEAD
-=======
->>>>>>> df4dcec9233ae316def09e576079969bae68dc9d
->>>>>>> project
         if found_pokemon = trainer.pokemons.find {|p| p.name == ans}
           found_pokemon.delete
           puts "You released your #{ans}...".colorize(:blue)
@@ -129,15 +118,8 @@ module Command
         else 
           puts "You do not have a #{ans}!".colorize(:red)
         end
-<<<<<<< HEAD
-      end  
-=======
-<<<<<<< HEAD
-      end
-=======
-      end  
->>>>>>> df4dcec9233ae316def09e576079969bae68dc9d
->>>>>>> project
+      end 
+
     end
 
     def list_pokemon
@@ -153,10 +135,21 @@ module Command
     end
 
     def where_am_i
-      north_area = Area.all.find(id: trainer.area.north_area_id)
+      north_area = Area.all.find_by(id: trainer.area.north_area_id)
+      south_area = Area.all.find_by(id: trainer.area.south_area_id)
+      east_area = Area.all.find_by(id: trainer.area.east_area_id)
+      west_area = Area.all.find_by(id: trainer.area.west_area_id)
+
       place = trainer.area.name
+
       puts "You are in #{place}."
-      puts "To the north is #{}"
+
+      puts "To the north is #{north_area.name}." if north_area
+      puts "To the south is #{south_area.name}." if south_area
+      puts "To the east is #{east_area.name}." if east_area
+      puts "To the west is #{west_area.name}." if west_area
+
+      puts
     end
 
     def in_battle_check
@@ -183,9 +176,9 @@ module Command
     def help
       puts
       puts "- Commands -" 
-      puts "Up Arrow - Goes north of your current location."
-      puts "Down Arrow - Goes south of your current location."
-      puts "w - Walk in the tall grass to look for Pokemon. (does not work in towns)"
+      puts "Arrow Keys - Move in that direction."
+      puts "w - Walk in the tall grass to look for Pokemon."
+      puts "f - Fish in the water for Pokemon."
       puts "Esc - Opens a menu with additional options."
       puts "Tab - Tells you where you are!"
       puts "g - Gets more pokeballs from Prof Oak! (only works in Pallet Town)"
