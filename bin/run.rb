@@ -35,7 +35,7 @@ def get_restaurant_object(restaurant_name,user)
     puts "|\n"
     puts "|-------------------------------------------------------------------------------------------------|"
     answer = @prompt.yes?("Would you like to add this restaurant into your list?")
-    user = User.find(user.id)
+    # user = User.find(user.id)
     if answer
         if user.restaurants.map{|restaurant| restaurant.restaurant_name}.include?(restaurant.restaurant_name)
             puts "You have that restaurant already in your list".red
