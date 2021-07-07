@@ -1,5 +1,6 @@
 require_relative '../config/environment'
 
+ActiveRecord::Base.logger.level = 1 # or Logger::INFO
 
-
-puts "HELLO WORLD"
+# Run main game loop
+Main.run
